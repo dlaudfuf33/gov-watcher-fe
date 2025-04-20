@@ -1,18 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import {
-  ThumbsUp,
-  ThumbsDown,
-  MessageCircle,
-  Share2,
-  Link,
-} from "lucide-react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import ProposerProfile from "@/components/ProposerProfile";
+import { NoticeProps } from "@/types/notice";
 
 // Chart.js 등록
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -23,87 +18,38 @@ export interface ProposerGroup {
   imageUrl?: string;
 }
 
-export interface NoticeProps {
-  billNo: string;
-  viewCount: number;
-  commentsCount: number;
-  title: string;
-  startDate: Date;
-  endDate: Date;
-  proposerImageUrl: string;
-  mainProposer: string;
-  proposerParty: string;
-  proposers: ProposerGroup[];
-  proposerDate: Date;
-  committee: string;
-  currentStep: string;
-  stepLog: string[];
-  summary: string;
-  agreeRatio: number;
-  opposeRatio: number;
-  detailUrl: string;
-  commentsUrl: string;
-}
-
 interface NoticeShortCardProps {
   notice: NoticeProps;
 }
 
 export default function NoticeShortCard({ notice }: NoticeShortCardProps) {
-  const [isHovered, setIsHovered] = useState(false);
   const router = useRouter();
   const [showDetails, setShowDetails] = useState(false);
 
-  // 정당에 따른 색상 결정
-  const getPartyColor = () => {
-    switch (notice.proposerParty) {
-      case "더불어민주당":
-        return "border-blue-200 bg-gradient-to-br from-white to-cyan-100";
-      case "국민의힘":
-        return "border-red-200/50 bg-gradient-to-br from-white to-pink-100";
-      case "정의당":
-        return "border-yellow-200/50 bg-gradient-to-br from-white to-amber-100";
-      default:
-        return "border-gray-200/50 bg-gradient-to-br from-white to--stone-300";
-    }
-  };
-
   return (
     <Card
-      className={` w-full min-h-0 max-h-[1400px] flex flex-col shadow-2xl rounded-2xl backdrop-blur-3xl border ${getPartyColor()} `}
+      className={`w-full min-h-0 max-h-[1400px] flex flex-col shadow-2xl rounded-2xl backdrop-blur-3xl border`}
     >
       <CardContent className="p-4 flex-grow min-h-0 overflow-hidden">
-        <div className="mt-1 mb-1 text-sm text-gray-500">[{notice.billNo}]</div>
-
-        <div className="mt-1 text-sm text-red-500">
-          ({notice.startDate.toLocaleDateString()} ~
-          {notice.endDate.toLocaleDateString()})
+        <div className="mt-2 inline-flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-rose-50 to-blue-50 border border-rose-200 text-sm text-gray-800 font-semibold rounded-lg shadow-sm backdrop-blur-sm">
+          <span className="text-blue-700">📌 입법예고 기간</span>
+          <span className="text-gray-700 font-medium">
+            {notice.startDate.toLocaleDateString()} ~{" "}
+            {notice.endDate.toLocaleDateString()}
+          </span>
         </div>
+        <div className="mt-2 text-sm text-gray-500">[No.{notice.billNo}]</div>
         <h2 className="text-[clamp(1.125rem,4vw,1.5rem)] font-bold mb-2 text-gray-800 break-words line-clamp-1 leading-relaxed">
           {notice.title}
         </h2>
 
         <div className="mb-4 gap-4 space-y-3">
-          <div className="flex flex-row justify-start gap-2 border p-3 rounded-md">
-            <button
-              className="w-full text-left flex items-start gap-2 group hover:bg-blue-50 p-2 rounded-md transition "
-              onClick={() => setShowDetails(true)}
-            >
-              <img
-                src={notice.proposerImageUrl || "/placeholder.svg"}
-                alt={notice.mainProposer}
-                className="w-12 h-12 rounded-full border-2 border-white shadow-md group-hover:scale-105 transition-transform"
-              />
-              <div className="flex flex-col justify-start flex-grow">
-                <div className="text-lg font-semibold text-gray-900 group-hover:text-blue-700">
-                  {notice.mainProposer} ({notice.proposerParty})
-                </div>
-                <div className="text-[clamp(0.5rem,4vw,1rem)] break-words line-clamp-1 font-normal text-gray-700 group-hover:text-blue-500">
-                  등 {notice.proposers.length}인
-                </div>
-              </div>
-            </button>
-          </div>
+          {/* 공동발의자 프로필 카드 및 모달 */}
+          <ProposerProfile
+            notice={notice}
+            showDetails={showDetails}
+            setShowDetails={setShowDetails}
+          />
 
           <div className="relative w-full h-[20vw] max-h-12 flex-shrink-0 bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
             {/* 찬성 영역 */}
@@ -147,51 +93,19 @@ export default function NoticeShortCard({ notice }: NoticeShortCardProps) {
           </div>
         </div>
 
-        {/* 모달 창: 공동발의자 정보 */}
-        {showDetails && (
-          <div
-            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center"
-            onClick={() => setShowDetails(false)}
-          >
-            <div
-              className="bg-white rounded-xl p-6 max-w-2xl w-full shadow-xl border relative"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button
-                className="absolute top-3 right-3 text-gray-500 hover:text-gray-800"
-                onClick={() => setShowDetails(false)}
-              >
-                ❌
-              </button>
-              <h4 className="font-semibold text-gray-800 mb-4">공동발의자</h4>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                {notice.proposers.map((p) => (
-                  <button
-                    key={p.id}
-                    onClick={() => router.push(`/politicians/${p.id}`)}
-                    className="flex flex-col items-center text-center hover:scale-105 transition-transform duration-200"
-                  >
-                    <img
-                      src={p.imageUrl || "/placeholder.svg"}
-                      alt={p.name}
-                      className="w-16 h-16 rounded-full border shadow-sm mb-1 object-cover"
-                    />
-                    <span className="text-sm font-medium text-gray-800">
-                      {p.name}
-                    </span>
-                    <span className="text-xs text-gray-500">{p.party}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-
         {/* 본문 영역 */}
-        <div className="bg-gray-100 rounded-md p-4 mt-2 border overflow-hidden max-h-[800px]">
-          <p className="text-[clamp(1rem,4vw,1.25rem)] text-sm font-semibold text-gray-700 mb-6 break-words whitespace-pre-wrap leading-snug">
-            {notice.summary}
-          </p>
+        <div
+          className="px-6 py-6 bg-white/80 backdrop-blur-md rounded-2xl border border-gray-200 shadow-[0_4px_12px_rgba(0,0,0,0.05)] transition-all duration-300
+          hover:bg-white/90 hover:shadow-[0_6px_20px_rgba(0,0,0,0.08)] cursor-pointer"
+        >
+          <div className="space-y-4">
+            <h2 className="text-[clamp(1.25rem,3vw,1.75rem)] font-semibold text-gray-900 tracking-tight">
+              {notice.title}
+            </h2>
+            <p className="text-[clamp(1rem,2.5vw,1.125rem)] text-gray-600 leading-relaxed">
+              {notice.summary}
+            </p>
+          </div>
         </div>
 
         <div
@@ -199,20 +113,18 @@ export default function NoticeShortCard({ notice }: NoticeShortCardProps) {
           className="flex flex-row justify-between items-start gap-4 mt-4"
         >
           <div className="w-3/5 max-w-[450px]">
-            <div className="flex flex-wrap items-start gap-2 border p-3 rounded-md">
-              <div className="flex flex-col justify-start min-w-15">
-                <div className="text-sm font-semibold text-gray-700 whitespace-normal">
-                  🧭 진행 상황
-                </div>
+            <div className="flex flex-col gap-2 p-4 rounded-xl border border-cyan-200 bg-gradient-to-br from-blue-50 to-cyan-50 shadow-sm backdrop-blur-sm">
+              <div className="text-base font-semibold text-cyan-700">
+                🧭 입법 절차 진행 상황
               </div>
-              <div className="flex flex-wrap gap-1">
+              <div className="flex flex-wrap items-center gap-1">
                 {notice.stepLog.map((step, i) => (
                   <span
                     key={i}
-                    className={`px-2 py-0.5 rounded-full text-s ${
+                    className={`px-3 py-1 rounded-full text-xs tracking-tight transition-all duration-200 ${
                       step === notice.currentStep
-                        ? "bg-red-100 text-red-700 font-semibold"
-                        : "bg-gray-100 text-gray-600"
+                        ? "bg-cyan-200 text-cyan-900 font-bold shadow-sm"
+                        : "bg-white border border-gray-300 text-gray-600"
                     }`}
                   >
                     {step} ➡
@@ -225,7 +137,7 @@ export default function NoticeShortCard({ notice }: NoticeShortCardProps) {
           <div className="flex flex-col items-end gap-3 w-fit">
             <Button
               asChild
-              className="w-[160px] self-end bg-gradient-to-r from-blue-400 to-red-400 backdrop-blur-2xl hover:from-blue-600 hover:to-red-600 text-white shadow-md"
+              className="w-[160px] self-end bg-gradient-to-br from-blue-100 via-cyan-200 to-cyan-300 text-cyan-900 hover:from-blue-200 hover:to-cyan-400 font-semibold shadow-inner border border-cyan-300"
             >
               <a
                 href={notice.detailUrl}
@@ -237,7 +149,7 @@ export default function NoticeShortCard({ notice }: NoticeShortCardProps) {
             </Button>
             <Button
               asChild
-              className="w-[160px] self-end bg-gradient-to-r from-blue-400 to-red-400 backdrop-blur-2xl hover:from-blue-600 hover:to-red-600 text-white shadow-md"
+              className="w-[160px] self-end bg-gradient-to-br from-blue-100 via-cyan-200 to-cyan-300 text-cyan-900 hover:from-blue-200 hover:to-cyan-400 font-semibold shadow-inner border border-cyan-300"
             >
               <a
                 href={notice.detailUrl}
@@ -249,7 +161,7 @@ export default function NoticeShortCard({ notice }: NoticeShortCardProps) {
             </Button>
             <Button
               asChild
-              className="w-[160px] self-end bg-gradient-to-r from-blue-400 to-red-400 backdrop-blur-2xl hover:from-blue-600 hover:to-red-600 text-white shadow-md"
+              className="w-[160px] self-end bg-gradient-to-br from-blue-100 via-cyan-200 to-cyan-300 text-cyan-900 hover:from-blue-200 hover:to-cyan-400 font-semibold shadow-inner border border-cyan-300"
             >
               <a
                 href={notice.commentsUrl}

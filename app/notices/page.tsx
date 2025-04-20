@@ -2,9 +2,8 @@
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import NoticeShortCard, {
-  type NoticeProps,
-} from "@/components/NoticeShortCard";
+import NoticeShortCard from "@/components/NoticeShortCard";
+import type { NoticeProps } from "@/types/notice";
 import NoticeFeedCard from "@/components/NoticeFeedCard";
 import NoticeGridCard from "@/components/NoticeGridCard";
 import NoticeListCard from "@/components/NoticeListCard";
@@ -133,6 +132,156 @@ const mockNotices: NoticeProps[] = [
     endDate: new Date("2024-04-01"),
     proposerImageUrl: "/mock/hong.jpg",
     mainProposer: "홍길동",
+    proposerParty: "국민의힘",
+    proposers: [
+      {
+        id: "1",
+        name: "김용태",
+        party: "더불어민주당",
+        imageUrl: "/mock/kim.jpg",
+      },
+      { id: "2", name: "이민정", party: "더불어민주당" },
+    ],
+    proposerDate: new Date("2024-03-01"),
+    committee: "행정안전위원회",
+    currentStep: "위원회 심사",
+    stepLog: ["접수", "위원회 심사", "임기만료폐기"],
+    summary:
+      "접경지역 주민의 생활환경 개선 및 지원 강화를 위해 특별법을 개정하고자 함.",
+    agreeRatio: 95,
+    opposeRatio: 5,
+    detailUrl: "https://example.com/bill/1",
+    commentsUrl: "https://example.com/opinion/1",
+  },
+  {
+    billNo: "2209892",
+    viewCount: 1234,
+    commentsCount: 12,
+    title: "접경지역 지원 특별법 일부개정법률안(김용태의원 등 14인)",
+    startDate: new Date("2024-03-01"),
+    endDate: new Date("2024-04-01"),
+    proposerImageUrl: "/mock/hong.jpg",
+    mainProposer: "홍길동",
+    proposerParty: "더불어민주당",
+    proposers: [
+      {
+        id: "1",
+        name: "김용태",
+        party: "더불어민주당",
+        imageUrl: "/mock/kim.jpg",
+      },
+      { id: "2", name: "이민정", party: "더불어민주당" },
+    ],
+    proposerDate: new Date("2024-03-01"),
+    committee: "행정안전위원회",
+    currentStep: "위원회 심사",
+    stepLog: ["접수", "위원회 심사", "임기만료폐기"],
+    summary:
+      "접경지역 주민의 생활환경 개선 및 지원 강화를 위해 특별법을 개정하고자 함.",
+    agreeRatio: 95,
+    opposeRatio: 5,
+    detailUrl: "https://example.com/bill/1",
+    commentsUrl: "https://example.com/opinion/1",
+  },
+  {
+    billNo: "2209892",
+    viewCount: 1234,
+    commentsCount: 12,
+    title: "접경지역 지원 특별법 일부개정법률안(김용태의원 등 14인)",
+    startDate: new Date("2024-03-01"),
+    endDate: new Date("2024-04-01"),
+    proposerImageUrl: "/mock/hong.jpg",
+    mainProposer: "홍길동",
+    proposerParty: "더불어민주당",
+    proposers: [
+      {
+        id: "1",
+        name: "김용태",
+        party: "더불어민주당",
+        imageUrl: "/mock/kim.jpg",
+      },
+      { id: "2", name: "이민정", party: "더불어민주당" },
+    ],
+    proposerDate: new Date("2024-03-01"),
+    committee: "행정안전위원회",
+    currentStep: "위원회 심사",
+    stepLog: ["접수", "위원회 심사", "임기만료폐기"],
+    summary:
+      "접경지역 주민의 생활환경 개선 및 지원 강화를 위해 특별법을 개정하고자 함.",
+    agreeRatio: 95,
+    opposeRatio: 5,
+    detailUrl: "https://example.com/bill/1",
+    commentsUrl: "https://example.com/opinion/1",
+  },
+  {
+    billNo: "2209892",
+    viewCount: 1234,
+    commentsCount: 12,
+    title: "접경지역 지원 특별법 일부개정법률안(김용태의원 등 14인)",
+    startDate: new Date("2024-03-01"),
+    endDate: new Date("2024-04-01"),
+    proposerImageUrl: "/mock/hong.jpg",
+    mainProposer: "홍길동",
+    proposerParty: "더불어민주당",
+    proposers: [
+      {
+        id: "1",
+        name: "김용태",
+        party: "더불어민주당",
+        imageUrl: "/mock/kim.jpg",
+      },
+      { id: "2", name: "이민정", party: "더불어민주당" },
+    ],
+    proposerDate: new Date("2024-03-01"),
+    committee: "행정안전위원회",
+    currentStep: "위원회 심사",
+    stepLog: ["접수", "위원회 심사", "임기만료폐기"],
+    summary:
+      "접경지역 주민의 생활환경 개선 및 지원 강화를 위해 특별법을 개정하고자 함.",
+    agreeRatio: 95,
+    opposeRatio: 5,
+    detailUrl: "https://example.com/bill/1",
+    commentsUrl: "https://example.com/opinion/1",
+  },
+  {
+    billNo: "2209892",
+    viewCount: 1234,
+    commentsCount: 12,
+    title: "접경지역 지원 특별법 일부개정법률안(김용태의원 등 14인)",
+    startDate: new Date("2024-03-01"),
+    endDate: new Date("2024-04-01"),
+    proposerImageUrl: "/mock/hong.jpg",
+    mainProposer: "홍길동",
+    proposerParty: "더불어민주당",
+    proposers: [
+      {
+        id: "1",
+        name: "김용태",
+        party: "더불어민주당",
+        imageUrl: "/mock/kim.jpg",
+      },
+      { id: "2", name: "이민정", party: "더불어민주당" },
+    ],
+    proposerDate: new Date("2024-03-01"),
+    committee: "행정안전위원회",
+    currentStep: "위원회 심사",
+    stepLog: ["접수", "위원회 심사", "임기만료폐기"],
+    summary:
+      "접경지역 주민의 생활환경 개선 및 지원 강화를 위해 특별법을 개정하고자 함.",
+    agreeRatio: 95,
+    opposeRatio: 5,
+    detailUrl: "https://example.com/bill/1",
+    commentsUrl: "https://example.com/opinion/1",
+  },
+  {
+    billNo: "2209892",
+    viewCount: 1234,
+    commentsCount: 12,
+    title: "접경지역 지원 특별법 일부개정법률안(김용태의원 등 14인)",
+    startDate: new Date("2024-03-01"),
+    endDate: new Date("2024-04-01"),
+    proposerImageUrl: "/mock/hong.jpg",
+    mainProposer: "홍길동",
     proposerParty: "더불어민주당",
     proposers: [
       {
@@ -224,14 +373,14 @@ export default function NoticesPage() {
                     <LayoutList className="h-4 w-4 mr-2" />
                     <span className="hidden md:inline">피드</span>
                   </TabsTrigger>
-                  <TabsTrigger value="grid">
-                    <Grid3X3 className="h-4 w-4 mr-2" />
-                    <span className="hidden md:inline">그리드</span>
-                  </TabsTrigger>
                   <TabsTrigger value="list">
                     <ListFilter className="h-4 w-4 mr-2" />
                     <span className="hidden md:inline">리스트</span>
                   </TabsTrigger>
+                  {/* <TabsTrigger value="grid">
+                    <Grid3X3 className="h-4 w-4 mr-2" />
+                    <span className="hidden md:inline">그리드</span>
+                  </TabsTrigger> */}
                 </TabsList>
                 <div className="flex-1 scrollbar-hide overflow-y-auto relative">
                   {/* 쇼츠 뷰 (유튜브 쇼츠 스타일) */}
@@ -260,19 +409,6 @@ export default function NoticesPage() {
                     </div>
                   </TabsContent>
 
-                  {/* 그리드 뷰 (인스타그램 스타일) */}
-                  <TabsContent value="grid" className="mt-0">
-                    <div className="py-8">
-                      <div className="container mx-auto px-4">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                          {mockNotices.map((notice, index) => (
-                            <NoticeGridCard key={index} notice={notice} />
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </TabsContent>
-
                   {/* 리스트 뷰 (카카오페이지 스타일) */}
                   <TabsContent value="list" className="mt-0">
                     <div className="py-8">
@@ -285,6 +421,19 @@ export default function NoticesPage() {
                       </div>
                     </div>
                   </TabsContent>
+
+                  {/* 그리드 뷰 (인스타그램 스타일) */}
+                  {/* <TabsContent value="grid" className="mt-0">
+                    <div className="py-8">
+                      <div className="container mx-auto px-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                          {mockNotices.map((notice, index) => (
+                            <NoticeGridCard key={index} notice={notice} />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </TabsContent> */}
                 </div>
               </Tabs>
             </div>
