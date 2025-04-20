@@ -46,12 +46,12 @@ export default function NoticeGridCard({ notice }: { notice: NoticeProps }) {
               src={
                 notice.proposerImageUrl || "/placeholder.svg?height=40&width=40"
               }
-              alt={notice.proposerName}
+              alt={notice.mainProposer}
               className="w-8 h-8 rounded-full mr-2 border-2 border-white shadow-md"
             />
             <div>
               <div className="text-sm font-medium text-white">
-                {notice.proposerName}
+                {notice.mainProposer}
               </div>
               <div className="text-xs text-gray-300">
                 {notice.proposerParty}

@@ -73,15 +73,15 @@ export default function NoticeFeedCard({ notice }: { notice: NoticeProps }) {
             src={
               notice.proposerImageUrl || "/placeholder.svg?height=40&width=40"
             }
-            alt={notice.proposerName}
+            alt={notice.mainProposer}
             className="w-12 h-12 rounded-full mr-4 border-2 border-white shadow-md"
           />
           <div>
             <div className="font-medium text-gray-800">
-              {notice.proposerName}
+              {notice.mainProposer}
             </div>
             <div className="text-sm text-gray-500">
-              {notice.proposerParty} · 외 {notice.proposerCount}인 ·{" "}
+              {notice.proposers}
               {notice.billNo}
             </div>
           </div>

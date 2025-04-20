@@ -18,78 +18,171 @@ import {
   Smartphone,
 } from "lucide-react";
 import SidebarFilter from "@/components/SidebarFilter";
+var test = `제안이유 및 주요내용
+
+현행법에 따라 지방교육재정교부금의 재원은 해당 연도 내국세 총액의 1만분의 2,079에 해당하는 금액 및 「유아교육지원특별회계법」에서 정하는 금액 등을 제외한 교육세 세입액을 합산한 금액으로 구성되어 있음.
+한편, 단계적으로 확대된 고등학교 등의 무상교육이 현재 전체 학년을 대상으로 실시되고 있는데 고등학교 등의 무상교육을 위한 경비 부담에 관한 특례의 유효기간이 2024년 12월 31일로 만료됨에 따라 지속가능한 고등학교 등의 무상교육 재원을 위한 대책 마련이 필요한 시점임.
+이에 교부금의 재원을 해당 연도 내국세의 1만분의 2,079에서 1만분의 2,109로 확대하여 고등학교 등의 무상교육이 안정적으로 이루어질 수 있도록 하려는 것임(안 제3조제2항제1호 등).
+제출방법: 입법예고의 진행 상태가 '진행'일 경우에만 의견 등록이 가능하며, '종료'일 경우 의견 등록이 불가능합니다.
+아래의 [의견등록] 버튼 혹은 상단의 [의견등록] 탭을 클릭하여 의견을 작성하실 수 있으며, 위의 의견제출 방법을 이용한 제출도 가능합니다.
+`;
 
 // Mock 데이터
 const mockNotices: NoticeProps[] = [
   {
-    billNo: "제2023-12345호",
-    title: "청소년 보호법 일부개정법률안",
+    billNo: "2209892",
+    viewCount: 1234,
+    commentsCount: 12,
+    title: "접경지역 지원 특별법 일부개정법률안(김용태의원 등 14인)",
+    startDate: new Date("2024-03-01"),
+    endDate: new Date("2024-04-01"),
     proposerImageUrl: "/mock/hong.jpg",
-    proposerName: "홍길동",
+    mainProposer: "홍길동",
     proposerParty: "더불어민주당",
-    proposerCount: 12,
-    summary:
-      "이 법안은 청소년의 인터넷 게임 중독 예방을 위해 심야시간대(0시~6시) 인터넷 게임 제공을 제한하는 '셧다운제'를 부활시키는 내용을 담고 있습니다. 또한 청소년 보호를 위한 게임 이용시간 제한 및 모니터링 시스템 구축을 의무화합니다.",
-    agreeRatio: 73,
-    opposeRatio: 27,
+    proposers: [
+      {
+        id: "1",
+        name: "홍길동",
+        party: "더불어민주당",
+        imageUrl: "/mock/hong.jpg",
+      },
+      {
+        id: "2",
+        name: "이민정",
+        party: "더불어민주당",
+        imageUrl: "/mock/hong.jpg",
+      },
+      {
+        id: "3",
+        name: "이민정",
+        party: "더불어민주당",
+        imageUrl: "/mock/hong.jpg",
+      },
+      {
+        id: "4",
+        name: "이민정",
+        party: "더불어민주당",
+        imageUrl: "/mock/hong.jpg",
+      },
+      {
+        id: "5",
+        name: "이민정",
+        party: "더불어민주당",
+        imageUrl: "/mock/hong.jpg",
+      },
+      {
+        id: "6",
+        name: "이민정",
+        party: "더불어민주당",
+        imageUrl: "/mock/hong.jpg",
+      },
+      {
+        id: "7",
+        name: "이민정",
+        party: "더불어민주당",
+        imageUrl: "/mock/hong.jpg",
+      },
+      {
+        id: "8",
+        name: "이민정",
+        party: "더불어민주당",
+        imageUrl: "/mock/hong.jpg",
+      },
+      {
+        id: "9",
+        name: "이민정",
+        party: "더불어민주당",
+        imageUrl: "/mock/hong.jpg",
+      },
+      {
+        id: "10",
+        name: "이민정",
+        party: "더불어민주당",
+        imageUrl: "/mock/hong.jpg",
+      },
+      {
+        id: "11",
+        name: "이민정",
+        party: "더불어민주당",
+        imageUrl: "/mock/hong.jpg",
+      },
+    ],
+    proposerDate: new Date("2024-03-01"),
+    committee: "행정안전위원회",
+    currentStep: "위원회 심사",
+    stepLog: [
+      "접수",
+      "위원회 심사",
+      "임기만료폐기",
+      "접수",
+      "위원회 심사",
+      "임기만료폐기",
+    ],
+    summary: test,
+    agreeRatio: 55,
+    opposeRatio: 45,
     detailUrl: "https://example.com/bill/1",
-    opinionUrl: "https://example.com/opinion/1",
+    commentsUrl: "https://example.com/opinion/1",
   },
   {
-    billNo: "제2023-12346호",
-    title: "기후위기 대응을 위한 탄소중립·녹색성장 기본법 일부개정법률안",
-    proposerImageUrl: "/mock/kim.jpg",
-    proposerName: "김철수",
-    proposerParty: "국민의힘",
-    proposerCount: 8,
-    summary:
-      "이 법안은 2050년까지 탄소중립 달성을 위한 구체적인 로드맵을 제시하고, 온실가스 감축 목표를 강화하는 내용을 담고 있습니다. 또한 기업의 탄소배출량 공시 의무화 및 탄소세 도입 근거를 마련합니다.",
-    agreeRatio: 85,
-    opposeRatio: 15,
-    detailUrl: "https://example.com/bill/2",
-    opinionUrl: "https://example.com/opinion/2",
-  },
-  {
-    billNo: "제2023-12347호",
-    title: "디지털 플랫폼 이용자 보호에 관한 법률안",
-    proposerImageUrl: "/mock/lee.jpg",
-    proposerName: "이영희",
-    proposerParty: "정의당",
-    proposerCount: 5,
-    summary:
-      "이 법안은 디지털 플랫폼 사업자의 불공정 거래행위를 규제하고 이용자의 권익을 보호하기 위한 내용을 담고 있습니다. 플랫폼 사업자의 정보 공개 의무, 알고리즘 투명성 확보, 소비자 피해구제 절차 등을 규정합니다.",
-    agreeRatio: 62,
-    opposeRatio: 38,
-    detailUrl: "https://example.com/bill/3",
-    opinionUrl: "https://example.com/opinion/3",
-  },
-  {
-    billNo: "제2023-12348호",
-    title: "인공지능 윤리 및 규제에 관한 법률안",
-    proposerImageUrl: "/mock/park.jpg",
-    proposerName: "박민수",
+    billNo: "2209892",
+    viewCount: 1234,
+    commentsCount: 12,
+    title: "접경지역 지원 특별법 일부개정법률안(김용태의원 등 14인)",
+    startDate: new Date("2024-03-01"),
+    endDate: new Date("2024-04-01"),
+    proposerImageUrl: "/mock/hong.jpg",
+    mainProposer: "홍길동",
     proposerParty: "더불어민주당",
-    proposerCount: 15,
+    proposers: [
+      {
+        id: "1",
+        name: "김용태",
+        party: "더불어민주당",
+        imageUrl: "/mock/kim.jpg",
+      },
+      { id: "2", name: "이민정", party: "더불어민주당" },
+    ],
+    proposerDate: new Date("2024-03-01"),
+    committee: "행정안전위원회",
+    currentStep: "위원회 심사",
+    stepLog: ["접수", "위원회 심사", "임기만료폐기"],
     summary:
-      "이 법안은 인공지능 기술의 윤리적 개발과 활용을 위한 기본원칙을 수립하고, 고위험 AI 시스템에 대한 규제 체계를 마련하는 내용을 담고 있습니다. AI 개발자와 사업자의 책임성, 투명성, 공정성 등을 강조합니다.",
-    agreeRatio: 58,
-    opposeRatio: 42,
-    detailUrl: "https://example.com/bill/4",
-    opinionUrl: "https://example.com/opinion/4",
+      "접경지역 주민의 생활환경 개선 및 지원 강화를 위해 특별법을 개정하고자 함.",
+    agreeRatio: 95,
+    opposeRatio: 5,
+    detailUrl: "https://example.com/bill/1",
+    commentsUrl: "https://example.com/opinion/1",
   },
   {
-    billNo: "제2023-12349호",
-    title: "주택임대차보호법 일부개정법률안",
-    proposerImageUrl: "/mock/choi.jpg",
-    proposerName: "최지원",
-    proposerParty: "국민의힘",
-    proposerCount: 10,
+    billNo: "2209892",
+    viewCount: 1234,
+    commentsCount: 12,
+    title: "접경지역 지원 특별법 일부개정법률안(김용태의원 등 14인)",
+    startDate: new Date("2024-03-01"),
+    endDate: new Date("2024-04-01"),
+    proposerImageUrl: "/mock/hong.jpg",
+    mainProposer: "홍길동",
+    proposerParty: "더불어민주당",
+    proposers: [
+      {
+        id: "1",
+        name: "김용태",
+        party: "더불어민주당",
+        imageUrl: "/mock/kim.jpg",
+      },
+      { id: "2", name: "이민정", party: "더불어민주당" },
+    ],
+    proposerDate: new Date("2024-03-01"),
+    committee: "행정안전위원회",
+    currentStep: "위원회 심사",
+    stepLog: ["접수", "위원회 심사", "임기만료폐기"],
     summary:
-      "이 법안은 전월세 상한제를 강화하고 계약갱신청구권 행사 기간을 연장하는 내용을 담고 있습니다. 또한 임대차 계약 정보의 투명한 공개와 임대료 인상률 제한을 통해 세입자의 주거 안정성을 높이고자 합니다.",
-    agreeRatio: 70,
-    opposeRatio: 30,
-    detailUrl: "https://example.com/bill/5",
-    opinionUrl: "https://example.com/opinion/5",
+      "접경지역 주민의 생활환경 개선 및 지원 강화를 위해 특별법을 개정하고자 함.",
+    agreeRatio: 95,
+    opposeRatio: 5,
+    detailUrl: "https://example.com/bill/1",
+    commentsUrl: "https://example.com/opinion/1",
   },
 ];
 
@@ -98,23 +191,18 @@ export default function NoticesPage() {
     <div className="min-h-screen flex flex-col">
       <Header />
       {/* 헤더 배경 */}
-      <div className="z-20 bg-gradient-to-r from-blue-200/80  to-red-200/80 backdrop-blur-sm py-8">
+      <div className="z-20 max-h-16 bg-gradient-to-r from-blue-200/80  to-red-200/80 backdrop-blur-sm py-4">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-3xl font-bold text-gray-800">
-                입법예고 쇼츠
-              </h1>
-              <p className="text-gray-600 mt-2">
-                국회에서 현재 논의 중인 법안들을 다양한 형태로 확인하세요.
-              </p>
+              <h1 className="text-3xl font-bold text-gray-800">입법 예고</h1>
             </div>
           </div>
         </div>
       </div>
       <main className="flex-grow flex">
         {/* 좌측 필터 고정 */}
-        <div className="w-64 shrink-0 sticky top-16 h-[calc(100vh-64px)] overflow-hidden bg-white/80 border-r border-gray-200 z-10">
+        <div className="w-64 shrink-0 sticky top-16 h-[calc(100vh-64px)] overflow-hidden bg-white/80 border-r border-gray-200 z-10 hidden md:block">
           <SidebarFilter />
         </div>
 
@@ -148,12 +236,11 @@ export default function NoticesPage() {
                 <div className="flex-1 scrollbar-hide overflow-y-auto relative">
                   {/* 쇼츠 뷰 (유튜브 쇼츠 스타일) */}
                   <TabsContent value="shorts" className="mt-0">
-                    <div className="flex justify-center py-8">
-                      {/* <div className="flex justify-center py-8 bg-[url('/mock/Taegeukgi.png')] bg-cover bg-center bg-no-repeat backdrop-blur-sm"> */}
-                      <div className="max-w-md w-full space-y-4">
+                    <div className="flex justify-center py-4">
+                      <div className="w-full max-w-6xl px-4 space-y-8">
                         {mockNotices.map((notice, index) => (
                           <div key={index} className="snap-start">
-                            <NoticeShortCard notice={notice} vertical={true} />
+                            <NoticeShortCard notice={notice} />
                           </div>
                         ))}
                       </div>

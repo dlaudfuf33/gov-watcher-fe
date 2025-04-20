@@ -50,12 +50,10 @@ export default function NoticeListCard({ notice }: { notice: NoticeProps }) {
               src={
                 notice.proposerImageUrl || "/placeholder.svg?height=40&width=40"
               }
-              alt={notice.proposerName}
+              alt={notice.mainProposer}
               className="w-6 h-6 rounded-full mr-2 border border-white shadow-sm"
             />
-            <span className="text-sm text-gray-700">
-              {notice.proposerName} 외 {notice.proposerCount}인
-            </span>
+            <span className="text-sm text-gray-700">{notice.proposers}</span>
           </div>
         </div>
         <div className="ml-4 flex flex-col items-end">
