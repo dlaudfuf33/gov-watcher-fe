@@ -22,7 +22,7 @@ export default function ProposerProfile({
       {/* 프로필 버튼 카드 */}
       <button
         className="w-full text-left flex items-start gap-3 group p-3 rounded-xl transition-all duration-300 ease-in-out 
-                bg-white hover:bg-gradient-to-r hover:from-blue-100 hover:to-red-100 
+                bg-white 
                   shadow-md hover:shadow-lg hover:scale-[1.015] hover:-translate-y-0.5"
         onClick={() => setShowDetails(true)}
       >
@@ -42,46 +42,46 @@ export default function ProposerProfile({
       </button>
 
       {/* 공동발의자 모달 */}
-      {showDetails && (
+      <div
+        className={`absolute inset-0 z-50 flex items-center justify-center transition-opacity duration-300 ${
+          showDetails ? "opacity-100 visible" : "opacity-0 invisible"
+        } bg-gradient-to-br from-pink-100/40 via-rose-50/40 to-blue-100/40 backdrop-blur-md`}
+        onClick={() => setShowDetails(false)}
+      >
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-pink-100/40 via-rose-50/40 to-blue-100/40 backdrop-blur-md"
-          onClick={() => setShowDetails(false)}
+          className="relative bg-white rounded-3xl p-6 w-full max-w-2xl shadow-2xl border border-[rgba(255,255,255,0.3)] backdrop-blur-xl transition-all duration-300 ease-in-out max-h-[90vh] overflow-y-auto"
+          onClick={(e) => e.stopPropagation()}
         >
-          <div
-            className="bg-white rounded-3xl p-6 w-full max-w-2xl shadow-2xl border border-[rgba(255,255,255,0.3)] backdrop-blur-xl transition-all duration-300 ease-in-out"
-            onClick={(e) => e.stopPropagation()}
+          <button
+            className="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition"
+            onClick={() => setShowDetails(false)}
           >
-            <button
-              className="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition"
-              onClick={() => setShowDetails(false)}
-            >
-              ❌
-            </button>
-            <h4 className="text-lg font-bold text-gray-800 mb-4 border-b pb-2 border-dashed border-rose-200">
-              공동발의자
-            </h4>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-              {notice.proposers.map((p) => (
-                <button
-                  key={p.id}
-                  onClick={() => router.push(`/politicians/${p.id}`)}
-                  className="flex flex-col items-center text-center bg-gradient-to-br from-rose-50 to-blue-50 rounded-xl p-3 shadow hover:scale-105 transition"
-                >
-                  <img
-                    src={p.imageUrl || "/placeholder.svg"}
-                    alt={p.name}
-                    className="w-16 h-16 rounded-full border border-pink-200 shadow-sm mb-1 object-cover"
-                  />
-                  <span className="text-sm font-semibold text-gray-800">
-                    {p.name}
-                  </span>
-                  <span className="text-xs text-gray-500">{p.party}</span>
-                </button>
-              ))}
-            </div>
+            ❌
+          </button>
+          <h4 className="text-lg font-bold text-gray-800 mb-4 border-b pb-2 border-dashed border-rose-200">
+            공동발의자
+          </h4>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+            {notice.proposers.map((p) => (
+              <button
+                key={p.id}
+                onClick={() => router.push(`/politicians/${p.id}`)}
+                className="flex flex-col items-center text-center bg-gradient-to-br from-rose-50 to-blue-50 rounded-xl p-3 shadow hover:scale-105 transition"
+              >
+                <img
+                  src={p.imageUrl || "/placeholder.svg"}
+                  alt={p.name}
+                  className="w-16 h-16 rounded-full border border-pink-200 shadow-sm mb-1 object-cover"
+                />
+                <span className="text-sm font-semibold text-gray-800">
+                  {p.name}
+                </span>
+                <span className="text-xs text-gray-500">{p.party}</span>
+              </button>
+            ))}
           </div>
         </div>
-      )}
+      </div>
     </>
   );
 }

@@ -52,12 +52,14 @@ export default function NoticeFeedCard({ notice }: { notice: NoticeProps }) {
   };
 
   return (
-    <Card className={`w-full shadow-lg rounded-xl backdrop-blur-md border `}>
+    <Card
+      className={`w-full bg-white/80 border border-gray-200 rounded-xl shadow-md backdrop-blur-md`}
+    >
       <CardContent className="p-6">
         <div className="mt-2 inline-flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-rose-50 to-blue-50 border border-rose-200 text-sm text-gray-800 font-semibold rounded-lg shadow-sm backdrop-blur-sm">
           <span className="text-blue-700">📌 입법예고 기간</span>
           <span className="text-gray-700 font-medium">
-            {notice.startDate.toLocaleDateString()} ~{" "}
+            {notice.startDate.toLocaleDateString()} ~
             {notice.endDate.toLocaleDateString()}
           </span>
         </div>
@@ -69,12 +71,16 @@ export default function NoticeFeedCard({ notice }: { notice: NoticeProps }) {
               setShowDetails={setShowDetails}
             />
           </div>
+
           <div
             className="px-6 py-6 bg-white/80 backdrop-blur-md rounded-2xl border border-gray-200 shadow-[0_4px_12px_rgba(0,0,0,0.05)] transition-all duration-300
           hover:bg-white/90 hover:shadow-[0_6px_20px_rgba(0,0,0,0.08)] cursor-pointer"
           >
             <div className="space-y-4">
               <h2 className="text-[clamp(1.25rem,3vw,1.75rem)] font-semibold text-gray-900 tracking-tight">
+                <p className="mt-2 text-sm text-gray-500">
+                  [No.{notice.billNo}]
+                </p>
                 {notice.title}
               </h2>
               <p className="text-[clamp(1rem,2.5vw,1.125rem)] text-gray-600 leading-relaxed">
@@ -101,7 +107,7 @@ export default function NoticeFeedCard({ notice }: { notice: NoticeProps }) {
             <div className="w-full lg:w-3/5 max-w-[500px]">
               <div className="flex flex-col gap-3 p-5 rounded-xl border border-cyan-200 bg-gradient-to-br from-blue-50 to-cyan-50 shadow-md backdrop-blur-md transition-all duration-300">
                 <div className="text-base font-semibold text-cyan-700 tracking-wide">
-                  🧭 입법 절차 진행 상황
+                  🧭 진행 상황
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
                   {notice.stepLog.map((step, i) => (
@@ -122,7 +128,7 @@ export default function NoticeFeedCard({ notice }: { notice: NoticeProps }) {
 
             <div className="flex flex-col items-end gap-3 w-full lg:w-fit">
               {[
-                ["🔍 입법예고 자세히 보기", notice.detailUrl],
+                ["🔍 자세히 보기", notice.detailUrl],
                 ["📜 바뀌는 법 내용 보기", notice.detailUrl],
                 ["🗣️ 의견 남기러 가기", notice.commentsUrl],
               ].map(([label, url], i) => (

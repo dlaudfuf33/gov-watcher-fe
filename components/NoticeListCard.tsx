@@ -31,7 +31,7 @@ export default function NoticeListCard({ notice }: { notice: NoticeProps }) {
 
   return (
     <Card
-      className={`shadow-md rounded-lg backdrop-blur-md ${getPartyColor()} hover:bg-white/80 transition-colors`}
+      className={`shadow-md rounded-lg backdrop-blur-md ${getPartyColor()} transition-transform duration-200 ease-in-out hover:scale-[1.015] hover:shadow-lg hover:bg-white/90`}
     >
       <CardContent className="p-4 flex items-center">
         <div className="flex-1">
@@ -39,7 +39,9 @@ export default function NoticeListCard({ notice }: { notice: NoticeProps }) {
             <Badge className={getPartyBadgeColor()}>
               {notice.proposerParty}
             </Badge>
-            <span className="text-sm text-gray-500 ml-2">{notice.billNo}</span>
+            <span className="text-sm text-gray-500 ml-2">
+              [{notice.billNo}]
+            </span>
           </div>
           <h3 className="font-bold text-lg mb-1">{notice.title}</h3>
           <p className="text-gray-600 text-sm line-clamp-1">{notice.summary}</p>

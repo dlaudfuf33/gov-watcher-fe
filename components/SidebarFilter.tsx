@@ -1,45 +1,22 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { X, Filter } from "lucide-react"; // 아이콘
-
 export default function SidebarFilter() {
-  const [open, setOpen] = useState(false);
-
   return (
-    <>
-      {/* Toggle Button (모바일 전용) */}
-      <Button
-        onClick={() => setOpen(!open)}
-        variant="outline"
-        size="sm"
-        className="fixed top-4 left-4 z-50 md:hidden bg-white/70 backdrop-blur-md"
-      >
-        <Filter className="w-4 h-4 mr-1" />
-        {open ? "닫기" : "필터"}
-      </Button>
-
+    <div className="relative max-w-[240px]">
       {/* Sidebar */}
       <div
-        className={`z-20 h-full w-64 bg-gradient-to-b from-blue-200/80  to-red-200/80 backdrop-blur-sm bg-cover bg-center bg-no-repeat text-gray-800 border-r border-[#e4ded5] transition-transform duration-300 ease-in-out ${
-          open ? "translate-x-0" : "-translate-x-full"
-        } md:translate-x-0 md:sticky md:top-16 md:h-[calc(100vh-64px)] md:block`}
+        className={`h-auto w-[230px] max-w-full z-20 p-4 bg-white/30 backdrop-blur-md border border-[#ddd6d1]/60 
+          rounded-2xl shadow-[inset_0_1px_4px_rgba(255,255,255,0.3)] space-y-6 overflow-y-auto`}
       >
-        <div className="p-3 space-y-0">
-          {/* 상단 닫기 버튼 */}
-          <div className="flex items-center justify-between mb-6 md:hidden">
-            <h2 className="text-lg font-bold">필터</h2>
-            <Button variant="ghost" size="icon" onClick={() => setOpen(false)}>
-              <X className="w-5 h-5" />
-            </Button>
-          </div>
-
+        <div className="space-y-0">
           <div className="space-y-2">
-            <div className="bg-[#fffefc]/60 border border-[#e5dfd1] rounded-xl p-4 backdrop-blur-md">
-              <h3 className="text-sm font-bold mb-2 text-[#2d1f10] border-b border-[#e0d8c8] pb-1">
+            <div className="bg-gradient-to-br from-white/60 to-[#f8f5f2]/60 border border-[#d7cfc6] rounded-2xl shadow-inner p-4 backdrop-blur-sm">
+              <h3 className="text-base font-bold text-black border-b border-black pb-2 mb-2">
                 정렬
               </h3>
               <select
-                className="w-full rounded-lg border border-[#d7ccc0] bg-white/70 backdrop-blur-sm p-2 text-sm text-[#3d2b1f] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-300 transition"
+                className="w-full rounded-lg border border-[#7B7879] bg-white/40 backdrop-blur-md 
+                p-2 text-sm text-black shadow-sm 
+                focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-300 transition
+                hover:bg-blue-400"
                 title="정렬 기준 선택"
                 aria-label="정렬 기준 선택"
               >
@@ -50,128 +27,143 @@ export default function SidebarFilter() {
               </select>
             </div>
 
-            <div className="bg-[#fffefc]/60 border border-[#e5dfd1] rounded-xl p-4 backdrop-blur-md">
-              <h3 className="text-sm font-bold mb-2 text-[#2d1f10] border-b border-[#e0d8c8] pb-1">
+            <div className="bg-gradient-to-br from-white/60 to-[#f8f5f2]/60 border border-[#d7cfc6] rounded-2xl shadow-inner p-4 backdrop-blur-sm">
+              <h3 className="text-sm font-semibold text-gray-700 border-b pb-2 mb-2">
                 정당
               </h3>
-              <div className="space-y-2">
-                <label className="flex items-center gap-2 text-sm text-[#3d2b1f] hover:bg-[#f7f3eb] px-1 py-1 rounded transition-colors">
-                  <input
-                    type="checkbox"
-                    id="party-dp"
-                    className="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <span>더불어민주당</span>
+              <div className="space-y-0">
+                <label className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-[#e6f0ff]/60 transition-all">
+                  <span className="flex items-center gap-2 text-sm text-gray-700">
+                    <input
+                      type="checkbox"
+                      id="party-dp"
+                      className="form-checkbox text-blue-500 focus:ring-2 focus:ring-blue-300 rounded-md"
+                    />
+                    더불어민주당
+                  </span>
                 </label>
-                <label className="flex items-center gap-2 text-sm text-[#3d2b1f] hover:bg-[#f7f3eb] px-1 py-1 rounded transition-colors">
-                  <input
-                    type="checkbox"
-                    id="party-gp"
-                    className="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <span>국민의힘</span>
+                <label className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-[#e6f0ff]/60 transition-all">
+                  <span className="flex items-center gap-2 text-sm text-gray-700">
+                    <input
+                      type="checkbox"
+                      id="party-gp"
+                      className="form-checkbox text-blue-500 focus:ring-2 focus:ring-blue-300 rounded-md"
+                    />
+                    국민의힘
+                  </span>
                 </label>
-                <label className="flex items-center gap-2 text-sm text-[#3d2b1f] hover:bg-[#f7f3eb] px-1 py-1 rounded transition-colors">
-                  <input
-                    type="checkbox"
-                    id="party-yd"
-                    className="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <span>정의당</span>
-                </label>
-                <label className="flex items-center gap-2 text-sm text-[#3d2b1f] hover:bg-[#f7f3eb] px-1 py-1 rounded transition-colors">
-                  <input
-                    type="checkbox"
-                    id="party-etc"
-                    className="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <span>기타 정당</span>
+
+                <label className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-[#e6f0ff]/60 transition-all">
+                  <span className="flex items-center gap-2 text-sm text-gray-700">
+                    <input
+                      type="checkbox"
+                      id="party-etc"
+                      className="form-checkbox text-blue-500 focus:ring-2 focus:ring-blue-300 rounded-md"
+                    />
+                    기타 정당
+                  </span>
                 </label>
               </div>
             </div>
 
-            <div className="bg-[#fffefc]/60 border border-[#e5dfd1] rounded-xl p-4 backdrop-blur-md">
-              <h3 className="text-sm font-bold mb-2 text-[#2d1f10] border-b border-[#e0d8c8] pb-1">
+            <div className="bg-gradient-to-br from-white/60 to-[#f8f5f2]/60 border border-[#d7cfc6] rounded-2xl shadow-inner p-4 backdrop-blur-sm">
+              <h3 className="text-sm font-semibold text-gray-700 border-b pb-2 mb-2">
                 카테고리
               </h3>
               <div className="space-y-2">
-                <label className="flex items-center gap-2 text-sm text-[#3d2b1f] hover:bg-[#f7f3eb] px-1 py-1 rounded transition-colors">
-                  <input
-                    type="checkbox"
-                    id="category-economy"
-                    className="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <span>💰 경제</span>
+                <label className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-[#e6f0ff]/60 transition-all">
+                  <span className="flex items-center gap-2 text-sm text-gray-700">
+                    <input
+                      type="checkbox"
+                      id="category-economy"
+                      className="form-checkbox text-blue-500 focus:ring-2 focus:ring-blue-300 rounded-md"
+                    />
+                    💰 경제
+                  </span>
                 </label>
-                <label className="flex items-center gap-2 text-sm text-[#3d2b1f] hover:bg-[#f7f3eb] px-1 py-1 rounded transition-colors">
-                  <input
-                    type="checkbox"
-                    id="category-welfare"
-                    className="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <span>🧑‍⚕️ 복지</span>
+                <label className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-[#e6f0ff]/60 transition-all">
+                  <span className="flex items-center gap-2 text-sm text-gray-700">
+                    <input
+                      type="checkbox"
+                      id="category-welfare"
+                      className="form-checkbox text-blue-500 focus:ring-2 focus:ring-blue-300 rounded-md"
+                    />
+                    🧑‍⚕️ 복지
+                  </span>
                 </label>
-                <label className="flex items-center gap-2 text-sm text-[#3d2b1f] hover:bg-[#f7f3eb] px-1 py-1 rounded transition-colors">
-                  <input
-                    type="checkbox"
-                    id="category-education"
-                    className="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <span>🎓 교육</span>
+                <label className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-[#e6f0ff]/60 transition-all">
+                  <span className="flex items-center gap-2 text-sm text-gray-700">
+                    <input
+                      type="checkbox"
+                      id="category-education"
+                      className="form-checkbox text-blue-500 focus:ring-2 focus:ring-blue-300 rounded-md"
+                    />
+                    🎓 교육
+                  </span>
                 </label>
-                <label className="flex items-center gap-2 text-sm text-[#3d2b1f] hover:bg-[#f7f3eb] px-1 py-1 rounded transition-colors">
-                  <input
-                    type="checkbox"
-                    id="category-environment"
-                    className="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <span>🌿 환경</span>
+                <label className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-[#e6f0ff]/60 transition-all">
+                  <span className="flex items-center gap-2 text-sm text-gray-700">
+                    <input
+                      type="checkbox"
+                      id="category-environment"
+                      className="form-checkbox text-blue-500 focus:ring-2 focus:ring-blue-300 rounded-md"
+                    />
+                    🌿 환경
+                  </span>
                 </label>
-                <label className="flex items-center gap-2 text-sm text-[#3d2b1f] hover:bg-[#f7f3eb] px-1 py-1 rounded transition-colors">
-                  <input
-                    type="checkbox"
-                    id="category-defense"
-                    className="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <span>🛡️ 국방</span>
+                <label className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-[#e6f0ff]/60 transition-all">
+                  <span className="flex items-center gap-2 text-sm text-gray-700">
+                    <input
+                      type="checkbox"
+                      id="category-defense"
+                      className="form-checkbox text-blue-500 focus:ring-2 focus:ring-blue-300 rounded-md"
+                    />
+                    🛡️ 국방
+                  </span>
                 </label>
               </div>
             </div>
 
-            <div className="bg-[#fffefc]/60 border border-[#e5dfd1] rounded-xl p-4 backdrop-blur-md">
-              <h3 className="text-sm font-bold mb-2 text-[#2d1f10] border-b border-[#e0d8c8] pb-1">
+            <div className="bg-gradient-to-br from-white/60 to-[#f8f5f2]/60 border border-[#d7cfc6] rounded-2xl shadow-inner p-4 backdrop-blur-sm">
+              <h3 className="text-sm font-semibold text-gray-700 border-b pb-2 mb-2">
                 찬반 비율
               </h3>
               <div className="space-y-2">
-                <label className="flex items-center gap-2 text-sm text-[#3d2b1f] hover:bg-[#f7f3eb] px-1 py-1 rounded transition-colors">
-                  <input
-                    type="checkbox"
-                    id="ratio-support"
-                    className="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <span>찬성 우세 (60% 이상)</span>
+                <label className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-[#e6f0ff]/60 transition-all">
+                  <span className="flex items-center gap-2 text-sm text-gray-700">
+                    <input
+                      type="checkbox"
+                      id="ratio-support"
+                      className="form-checkbox text-blue-500 focus:ring-2 focus:ring-blue-300 rounded-md"
+                    />
+                    찬성 우세
+                  </span>
                 </label>
-                <label className="flex items-center gap-2 text-sm text-[#3d2b1f] hover:bg-[#f7f3eb] px-1 py-1 rounded transition-colors">
-                  <input
-                    type="checkbox"
-                    id="ratio-even"
-                    className="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <span>팽팽 (40~60%)</span>
+                <label className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-[#e6f0ff]/60 transition-all">
+                  <span className="flex items-center gap-2 text-sm text-gray-700">
+                    <input
+                      type="checkbox"
+                      id="ratio-even"
+                      className="form-checkbox text-blue-500 focus:ring-2 focus:ring-blue-300 rounded-md"
+                    />
+                    팽팽
+                  </span>
                 </label>
-                <label className="flex items-center gap-2 text-sm text-[#3d2b1f] hover:bg-[#f7f3eb] px-1 py-1 rounded transition-colors">
-                  <input
-                    type="checkbox"
-                    id="ratio-opposition"
-                    className="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <span>반대 우세 (60% 이상)</span>
+                <label className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-[#e6f0ff]/60 transition-all">
+                  <span className="flex items-center gap-2 text-sm text-gray-700">
+                    <input
+                      type="checkbox"
+                      id="ratio-opposition"
+                      className="form-checkbox text-blue-500 focus:ring-2 focus:ring-blue-300 rounded-md"
+                    />
+                    반대 우세
+                  </span>
                 </label>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

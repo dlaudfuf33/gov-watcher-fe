@@ -9,9 +9,13 @@ import NoticeGridCard from "@/components/NoticeGridCard";
 import NoticeListCard from "@/components/NoticeListCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
+
 import {
   Sliders,
   Grid3X3,
+  ChevronsLeft,
   ListFilter,
   LayoutList,
   Smartphone,
@@ -336,35 +340,57 @@ const mockNotices: NoticeProps[] = [
 ];
 
 export default function NoticesPage() {
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      {/* 헤더 배경 */}
-      <div className="z-20 max-h-16 bg-gradient-to-r from-blue-200/80  to-red-200/80 backdrop-blur-sm py-4">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-800">입법 예고</h1>
-            </div>
-          </div>
-        </div>
-      </div>
-      <main className="flex-grow flex">
-        {/* 좌측 필터 고정 */}
-        <div className="w-64 shrink-0 sticky top-16 h-[calc(100vh-64px)] overflow-hidden bg-white/80 border-r border-gray-200 z-10 hidden md:block">
+
+      <main className="flex-grow flex relative max-h-full">
+        {/* 사이드필터 */}
+        <div
+          className={cn(
+            `absolute top-14 bottom-0 
+            max-h-[calc(100vh-56px)] overflow-y-auto scrollbar-hide
+            left-0 z-20 transition-all duration-300 ease-in-out`,
+            isFilterOpen
+              ? "translate-x-0 w-[240px]"
+              : "-translate-x-full w-[240px]"
+          )}
+        >
           <SidebarFilter />
         </div>
-
-        {/* 우측 콘텐츠 */}
-        <div className="flex-1 scrollbar-hide overflow-y-auto h-[calc(100vh-64px)] bg-[url('/mock/Taegeukgi.png')] bg-cover bg-center bg-no-repeat backdrop-blur-sm">
+        <div
+          className={cn(
+            `flex-1 overflow-y-auto h-[calc(100vh-64px)] pb-20
+            bg-[url('/mock/noticeBg.png')] bg-cover bg-center bg-no-repeat
+            transition-all duration-300`
+          )}
+        >
           {/* 뷰 모드 탭 */}
-          <div className="bg-white/60 backdrop-blur-md border-b border-gray-200/50">
-            <div className="container">
-              <Tabs
-                defaultValue="shorts"
-                className="w-full h-full flex flex-col"
-              >
-                <TabsList className="grid grid-cols-4 md:w-fit bg-gray-100/70 sticky top-0 z-20">
+          <div className=" backdrop-blur-sm border-b border-gray-200/50">
+            <Tabs defaultValue="shorts" className="w-full h-full flex flex-col">
+              <div className="flex justify-between items-center w-full sticky top-0 z-20 px-4 py-2 bg-white/60 backdrop-blur-xl border-b border-gray-200/50 shadow-sm">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-sm text-gray-700 hover:text-black px-3 bg-white/60 border border-gray-300 rounded-md shadow-sm backdrop-blur-md transition"
+                  onClick={() => setIsFilterOpen(!isFilterOpen)}
+                >
+                  {isFilterOpen ? (
+                    <span className="flex items-center">
+                      <ChevronsLeft className="h-4 w-4 mr-2" />
+                      <span className="hidden md:inline">닫기</span>
+                    </span>
+                  ) : (
+                    <span className="flex items-center">
+                      <Sliders className="h-4 w-4 mr-2" />
+                      <span className="hidden md:inline">필터</span>
+                    </span>
+                  )}
+                </Button>
+
+                <TabsList className="grid grid-cols-3 md:w-fit bg-gray-100/70">
                   <TabsTrigger value="shorts">
                     <Smartphone className="h-4 w-4 mr-2" />
                     <span className="hidden md:inline">쇼츠</span>
@@ -377,66 +403,50 @@ export default function NoticesPage() {
                     <ListFilter className="h-4 w-4 mr-2" />
                     <span className="hidden md:inline">리스트</span>
                   </TabsTrigger>
-                  {/* <TabsTrigger value="grid">
-                    <Grid3X3 className="h-4 w-4 mr-2" />
-                    <span className="hidden md:inline">그리드</span>
-                  </TabsTrigger> */}
                 </TabsList>
-                <div className="flex-1 scrollbar-hide overflow-y-auto relative">
-                  {/* 쇼츠 뷰 (유튜브 쇼츠 스타일) */}
-                  <TabsContent value="shorts" className="mt-0">
-                    <div className="flex justify-center py-4">
-                      <div className="w-full max-w-6xl px-4 space-y-8">
+              </div>
+
+              <div className="flex-1 scrollbar-hide overflow-y-auto relative">
+                {/* 쇼츠 뷰 (유튜브 쇼츠 스타일) */}
+                <TabsContent value="shorts" className="mt-0">
+                  <div className="flex justify-center py-4">
+                    <div className="w-full max-w-6xl px-4 space-y-8">
+                      {mockNotices.map((notice, index) => (
+                        <div key={index} className="snap-start">
+                          <NoticeShortCard notice={notice} />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </TabsContent>
+
+                {/* 피드 뷰 (페이스북/스레드 스타일) */}
+                <TabsContent value="feed" className="mt-0">
+                  <div className="py-8">
+                    <div className="container mx-auto px-4 max-w-2xl">
+                      {mockNotices.map((notice, index) => (
+                        <div key={index} className="mb-6">
+                          <NoticeFeedCard notice={notice} />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </TabsContent>
+
+                {/* 리스트 뷰 (카카오페이지 스타일) */}
+                <TabsContent value="list" className="mt-0">
+                  <div className="py-8">
+                    <div className="container mx-auto px-4">
+                      <div className="space-y-4">
                         {mockNotices.map((notice, index) => (
-                          <div key={index} className="snap-start">
-                            <NoticeShortCard notice={notice} />
-                          </div>
+                          <NoticeListCard key={index} notice={notice} />
                         ))}
                       </div>
                     </div>
-                  </TabsContent>
-
-                  {/* 피드 뷰 (페이스북/스레드 스타일) */}
-                  <TabsContent value="feed" className="mt-0">
-                    <div className="py-8">
-                      <div className="container mx-auto px-4 max-w-2xl">
-                        {mockNotices.map((notice, index) => (
-                          <div key={index} className="mb-6">
-                            <NoticeFeedCard notice={notice} />
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </TabsContent>
-
-                  {/* 리스트 뷰 (카카오페이지 스타일) */}
-                  <TabsContent value="list" className="mt-0">
-                    <div className="py-8">
-                      <div className="container mx-auto px-4">
-                        <div className="space-y-4">
-                          {mockNotices.map((notice, index) => (
-                            <NoticeListCard key={index} notice={notice} />
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </TabsContent>
-
-                  {/* 그리드 뷰 (인스타그램 스타일) */}
-                  {/* <TabsContent value="grid" className="mt-0">
-                    <div className="py-8">
-                      <div className="container mx-auto px-4">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                          {mockNotices.map((notice, index) => (
-                            <NoticeGridCard key={index} notice={notice} />
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </TabsContent> */}
-                </div>
-              </Tabs>
-            </div>
+                  </div>
+                </TabsContent>
+              </div>
+            </Tabs>
           </div>
         </div>
       </main>
