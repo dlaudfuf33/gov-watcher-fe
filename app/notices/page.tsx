@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import NoticeShortCard from "@/components/NoticeShortCard";
 import type { NoticeProps } from "@/types/notice";
 import NoticeFeedCard from "@/components/NoticeFeedCard";
-import NoticeGridCard from "@/components/NoticeGridCard";
+
 import NoticeListCard from "@/components/NoticeListCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -14,7 +14,6 @@ import { cn } from "@/lib/utils";
 
 import {
   Sliders,
-  Grid3X3,
   ChevronsLeft,
   ListFilter,
   LayoutList,
@@ -340,7 +339,7 @@ const mockNotices: NoticeProps[] = [
 ];
 
 export default function NoticesPage() {
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(true);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -369,7 +368,7 @@ export default function NoticesPage() {
         >
           {/* 뷰 모드 탭 */}
           <div className=" backdrop-blur-sm border-b border-gray-200/50">
-            <Tabs defaultValue="shorts" className="w-full h-full flex flex-col">
+            <Tabs defaultValue="list" className="w-full h-full flex flex-col">
               <div className="flex justify-between items-center w-full sticky top-0 z-20 px-4 py-2 bg-white/60 backdrop-blur-xl border-b border-gray-200/50 shadow-sm">
                 <Button
                   variant="ghost"
@@ -391,6 +390,10 @@ export default function NoticesPage() {
                 </Button>
 
                 <TabsList className="grid grid-cols-3 md:w-fit bg-gray-100/70">
+                  <TabsTrigger value="list">
+                    <ListFilter className="h-4 w-4 mr-2" />
+                    <span className="hidden md:inline">리스트</span>
+                  </TabsTrigger>
                   <TabsTrigger value="shorts">
                     <Smartphone className="h-4 w-4 mr-2" />
                     <span className="hidden md:inline">쇼츠</span>
@@ -399,15 +402,11 @@ export default function NoticesPage() {
                     <LayoutList className="h-4 w-4 mr-2" />
                     <span className="hidden md:inline">피드</span>
                   </TabsTrigger>
-                  <TabsTrigger value="list">
-                    <ListFilter className="h-4 w-4 mr-2" />
-                    <span className="hidden md:inline">리스트</span>
-                  </TabsTrigger>
                 </TabsList>
               </div>
 
               <div className="flex-1 scrollbar-hide overflow-y-auto relative">
-                {/* 쇼츠 뷰 (유튜브 쇼츠 스타일) */}
+                {/* 쇼츠 뷰 */}
                 <TabsContent value="shorts" className="mt-0">
                   <div className="flex justify-center py-4">
                     <div className="w-full max-w-6xl px-4 space-y-8">
@@ -420,7 +419,7 @@ export default function NoticesPage() {
                   </div>
                 </TabsContent>
 
-                {/* 피드 뷰 (페이스북/스레드 스타일) */}
+                {/* 피드 뷰 */}
                 <TabsContent value="feed" className="mt-0">
                   <div className="py-8">
                     <div className="container mx-auto px-4 max-w-2xl">
@@ -433,11 +432,11 @@ export default function NoticesPage() {
                   </div>
                 </TabsContent>
 
-                {/* 리스트 뷰 (카카오페이지 스타일) */}
+                {/* 리스트 뷰*/}
                 <TabsContent value="list" className="mt-0">
-                  <div className="py-8">
-                    <div className="container mx-auto px-4">
-                      <div className="space-y-4">
+                  <div className="py-8 mx-auto">
+                    <div className="container mx-auto flex justify-center">
+                      <div className="w-full max-w-7xl px-2 space-y-2">
                         {mockNotices.map((notice, index) => (
                           <NoticeListCard key={index} notice={notice} />
                         ))}
