@@ -26,10 +26,6 @@ import {
   getBillOpinionStats,
   getNoticeDetail,
 } from "@/api/notices/[billID]/NoticeDetailAPI";
-import {
-  getBillOpinionStatsFallback,
-  getNoticeDetailFallback,
-} from "@/api/notices/[billID]/NoticeDetailFallback";
 ChartJS.register(
   ArcElement,
   Tooltip,
