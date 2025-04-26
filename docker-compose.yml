@@ -7,10 +7,13 @@ services:
     restart: always
     environment:
       - NODE_ENV=production
+      - HOST=0.0.0.0
       - PORT=3000
       - VIRTUAL_HOST=govwhatsup.com
       - LETSENCRYPT_HOST=govwhatsup.com
       - LETSENCRYPT_EMAIL=dlaudfuf33@gmail.com
+    expose:
+      - "3000"
     networks:
       - proxy-tier
     healthcheck:
