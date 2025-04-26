@@ -1,0 +1,38 @@
+name: Deploy to Raspberry Pi
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.RASPI_SSH_KEY }}
+
+      - name: Deploy via SSH
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.RASPI_USER }}@${{ secrets.RASPI_HOST }} << 'EOF'
+            echo " lmrpi 접속 완료"
+
+            # FE 폴더로 이동
+            cd ~/gov-watcher-fe
+
+            # 최신 docker-compose 가져오기
+            git pull origin main
+
+            # 도커 컴포즈 최신 이미지 pull
+            docker compose pull
+
+            # 새 컨테이너로 무중단 재배포
+            docker compose up -d
+
+            echo "🚀 FE 최신화 완료"
+          EOF
