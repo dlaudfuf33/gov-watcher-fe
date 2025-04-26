@@ -12,7 +12,7 @@ import {
   LineElement,
 } from "chart.js";
 
-import { DailyOpinionStats } from "@/types/DailyOpinionStats";
+import { DailyOpinionStats } from "@/types/DailyOpinionStats.types";
 
 ChartJS.register(
   ArcElement,

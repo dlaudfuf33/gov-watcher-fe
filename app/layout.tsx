@@ -2,6 +2,7 @@ import type React from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { Flip, ToastContainer } from "react-toastify";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,6 +31,19 @@ export default function RootLayout({
         }}
       >
         {children}
+        <ToastContainer
+          position="top-center"
+          autoClose={700}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          transition={Flip}
+        />
       </body>
     </html>
   );

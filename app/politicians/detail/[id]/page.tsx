@@ -1,22 +1,20 @@
-import { Politicians } from "@/lib/politiciansData";
-import PoliticianDetailClient from "@/components/politician-detail/politician-detail-client";
+import PoliticianDetailClient from "@/components/politicians/detail/PoliticianDetailClient";
 import { notFound } from "next/navigation";
+import { getPoliticianById } from "@/api/politicians/PoliticiansAPI";
 
 interface PoliticianDetailPageProps {
   params: {
-    id: string;
+    id: number;
   };
 }
 
 export default async function PoliticianDetailPage({
   params,
 }: PoliticianDetailPageProps) {
-  // 실제 구현에서는 API 호출 등으로 데이터를 가져올 수 있음
-  // 서버 컴포넌트에서 데이터 페칭 수행
-  const politician = Politicians.find((m) => m.id === params.id);
+  const [politicianDetail] = await Promise.all([getPoliticianById(params)]);
 
   // 정치인을 찾지 못한 경우 404 페이지로 리다이렉트
-  if (!politician) {
+  if (politicianDetail.data.profile.id === null) {
     notFound();
   }
 
@@ -26,5 +24,5 @@ export default async function PoliticianDetailPage({
   // const relatedNews = await fetchRelatedNews(params.id)
 
   // 모든 데이터를 클라이언트 컴포넌트에 전달
-  return <PoliticianDetailClient politician={politician} />;
+  return <PoliticianDetailClient politicianDetail={politicianDetail.data} />;
 }

@@ -1,0 +1,49 @@
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import PartyDistributionChart from "@/components/charts/PartyDistributionChart";
+import GenderAgeChart from "@/components/charts/GenderAgeChart";
+import { getDemographicStats, getPartyDistribution } from "@/api/home/HomeAPI";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+
+ChartJS.register(ArcElement, Tooltip, Legend);
+
+export default async function PoliticianVisualizationSection() {
+  const [partyDistributionResponse, demographicStatsResponse] =
+    await Promise.all([getPartyDistribution(), getDemographicStats()]);
+
+  return (
+    <section className="mb-12 ">
+      <Tabs defaultValue="party">
+        <TabsList className="mb-0">
+          <TabsTrigger value="party">정당별 의원 수</TabsTrigger>
+          <TabsTrigger value="demographics">성별/나이대</TabsTrigger>
+          {/* <TabsTrigger value="region">지역구 분포</TabsTrigger> */}
+        </TabsList>
+
+        <TabsContent value="party">
+          <Card>
+            <CardHeader>
+              <CardTitle>정당별 의원 수 비율</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <PartyDistributionChart
+                butions={partyDistributionResponse.data}
+              />
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="demographics">
+          <Card>
+            <CardHeader>
+              <CardTitle>국회의원 성별 / 연령대 분포</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <GenderAgeChart stats={demographicStatsResponse.data} />
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
+    </section>
+  );
+}

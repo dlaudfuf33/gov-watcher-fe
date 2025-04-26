@@ -13,6 +13,14 @@ const config: Config = {
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        // 정치/정부 테마 색상
+        government: {
+          blue: "#003876", // 진한 네이비 블루 (정부/공식 문서에 자주 사용)
+          red: "#CD2E3A", // 태극기의 빨간색에서 영감
+          gold: "#D4B95E", // 공식 문서에 자주 사용되는 골드 색상
+          gray: "#5A6A7E", // 중립적인 정부 문서 색상
+          light: "#F0F4F9", // 밝은 배경색
+        },
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
@@ -84,10 +92,32 @@ const config: Config = {
             height: "0",
           },
         },
+        "toast-in": {
+          "0%": {
+            opacity: "0",
+            transform: "translateY(10px) scale(0.95)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0px) scale(1)",
+          },
+        },
+        "toast-out": {
+          "0%": {
+            opacity: "1",
+            transform: "translateY(0px) scale(1)",
+          },
+          "100%": {
+            opacity: "0",
+            transform: "translateY(0px) scale(0.95)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "toast-in": "toast-in 0.3s ease-out",
+        "toast-out": "toast-out 0.2s ease-in forwards",
       },
     },
   },

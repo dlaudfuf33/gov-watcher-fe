@@ -2,16 +2,22 @@
 
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import type { ChartData, ChartOptions, TooltipItem } from "chart.js";
+import { CategoryStat } from "@/types/CategoryStat.types";
 
 // Chart.js 등록
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export default function LegislationChart() {
-  const data = {
-    labels: ["경제", "복지", "교육", "환경", "국방", "외교", "기타"],
+interface LegislationChartProps {
+  stats: CategoryStat[];
+}
+
+export default function LegislationChart({ stats }: LegislationChartProps) {
+  const chartData: ChartData<"doughnut"> = {
+    labels: stats.map((item) => item.label),
     datasets: [
       {
-        data: [35, 25, 15, 10, 8, 5, 2],
+        data: stats.map((item) => item.value),
         backgroundColor: [
           "#3B82F6", // 파랑
           "#EF4444", // 빨강
@@ -26,8 +32,9 @@ export default function LegislationChart() {
     ],
   };
 
-  const options = {
+  const options: ChartOptions<"doughnut"> = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: "right" as const,
@@ -41,15 +48,20 @@ export default function LegislationChart() {
       },
       tooltip: {
         callbacks: {
-          label: (context: any) => `${context.label}: ${context.raw}%`,
+          label: (context: TooltipItem<"doughnut">) =>
+            `${context.label}: ${context.raw}%`,
         },
       },
     },
   };
 
   return (
-    <div className="w-full h-[360px] sm:h-[400px] md:h-[440px] flex items-center justify-center">
-      <Doughnut data={data} options={options} />
-    </div>
+    <>
+      <div className="bg-white shadow-xl ring-1 ring-gray-300/60 ring-offset-2 ring-offset-white rounded-2xl p-4 transition hover:shadow-2xl">
+        <div className="flex justify-center items-center w-full h-[260px] sm:h-[300px] md:h-[360px]">
+          <Doughnut data={chartData} options={options} />
+        </div>
+      </div>
+    </>
   );
 }
