@@ -35,4 +35,4 @@ ENV PORT=3000
 EXPOSE 3000
 
 # Next.js 앱 실행
-CMD ["pnpm", "start"]
+CMD ["node", ".next/standalone/server.js"]
