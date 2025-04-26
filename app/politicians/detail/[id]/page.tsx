@@ -1,7 +1,7 @@
+export const dynamic = "force-static";
 import PoliticianDetailClient from "@/components/politicians/detail/PoliticianDetailClient";
 import { notFound } from "next/navigation";
 import { getPoliticianById } from "@/api/politicians/PoliticiansAPI";
-
 interface PoliticianDetailPageProps {
   params: {
     id: number;
