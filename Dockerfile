@@ -17,8 +17,9 @@ RUN pnpm build
 FROM node:22-alpine
 
 WORKDIR /app
-
-# pnpm만 설치
+# curl 설치
+RUN apk add --no-cache curl
+# pnpm 설치
 RUN npm install -g pnpm
 
 # 빌드 결과물만 복사
