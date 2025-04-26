@@ -8,7 +8,7 @@ import SidebarFilter from "@/components/notice/SidebarFilter";
 import { cn } from "@/lib/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Sliders,
   ChevronsLeft,
@@ -17,8 +17,69 @@ import {
   Smartphone,
 } from "lucide-react";
 
+function applyFiltersAndSort(
+  notices: NoticeProps[],
+  filters: any
+): NoticeProps[] {
+  let result = notices;
+
+  // 필터링
+  result = result.filter((notice) => {
+    if (filters.party && !filters.party.includes(notice.proposerParty))
+      return false;
+    if (
+      filters.category &&
+      !filters.category.some((cat: string) => notice.summary.includes(cat))
+    )
+      return false;
+    if (filters.ratio) {
+      const diff = Math.abs(notice.agreeRatio - notice.opposeRatio);
+      if (
+        filters.ratio.includes("찬성 우세") &&
+        notice.agreeRatio <= notice.opposeRatio
+      )
+        return false;
+      if (
+        filters.ratio.includes("반대 우세") &&
+        notice.agreeRatio >= notice.opposeRatio
+      )
+        return false;
+      if (filters.ratio.includes("팽팽") && diff > 5) return false;
+    }
+    return true;
+  });
+
+  // 정렬
+  switch (filters.sortOption) {
+    case "찬성률 높은순":
+      result = result.slice().sort((a, b) => b.agreeRatio - a.agreeRatio);
+      break;
+    case "반대률 높은순":
+      result = result.slice().sort((a, b) => b.opposeRatio - a.opposeRatio);
+      break;
+    case "의견 많은순":
+      result = result.slice().sort((a, b) => b.commentsCount - a.commentsCount);
+      break;
+    default: // 최신순 (startDate 내림차순)
+      result = result
+        .slice()
+        .sort((a, b) => b.startDate.getTime() - a.startDate.getTime());
+      break;
+  }
+
+  return result;
+}
+
 export default function NoticesList({ notices }: { notices: NoticeProps[] }) {
   const [isFilterOpen, setIsFilterOpen] = useState(true);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsFilterOpen(window.innerWidth > 768);
+    }
+  }, []);
+  const [filters, setFilters] = useState({});
+
+  const filteredNotices = applyFiltersAndSort(notices, filters);
 
   return (
     <>
@@ -34,7 +95,9 @@ export default function NoticesList({ notices }: { notices: NoticeProps[] }) {
               : "-translate-x-full w-[240px]"
           )}
         >
-          <SidebarFilter />
+          <SidebarFilter
+            onFilterChange={(newFilters) => setFilters(newFilters)}
+          />
         </section>
         <section
           className={cn(
@@ -87,7 +150,7 @@ export default function NoticesList({ notices }: { notices: NoticeProps[] }) {
                 <TabsContent value="shorts" className="mt-0">
                   <div className="flex justify-center py-4">
                     <div className="w-full max-w-6xl px-4 space-y-8">
-                      {notices.map((notice, index) => (
+                      {filteredNotices.map((notice, index) => (
                         <div key={index} className="snap-start">
                           <NoticeShortCard notice={notice} />
                         </div>
@@ -100,7 +163,7 @@ export default function NoticesList({ notices }: { notices: NoticeProps[] }) {
                 <TabsContent value="feed" className="mt-0">
                   <div className="py-8">
                     <div className="container mx-auto px-4 max-w-2xl">
-                      {notices.map((notice, index) => (
+                      {filteredNotices.map((notice, index) => (
                         <div key={index} className="mb-6">
                           <NoticeFeedCard notice={notice} />
                         </div>
@@ -114,7 +177,7 @@ export default function NoticesList({ notices }: { notices: NoticeProps[] }) {
                   <div className="py-8 mx-auto">
                     <div className="container mx-auto flex justify-center">
                       <div className="w-full max-w-7xl px-2 space-y-2">
-                        {notices.map((notice, index) => (
+                        {filteredNotices.map((notice, index) => (
                           <NoticeListCard key={index} notice={notice} />
                         ))}
                       </div>
