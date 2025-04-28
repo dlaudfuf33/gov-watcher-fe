@@ -25,7 +25,7 @@ import Header from "@/components/Header";
 import {
   getBillOpinionStats,
   getNoticeDetail,
-} from "@/api/notices/[billID]/NoticeDetailAPI";
+} from "@/api/notices/detail/NoticeDetailAPI";
 ChartJS.register(
   ArcElement,
   Tooltip,

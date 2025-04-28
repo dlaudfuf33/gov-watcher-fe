@@ -2,7 +2,7 @@ import instance from "@/api/axios";
 import type {
   BillOpinionStatsResponse,
   NoticeDetailResponse,
-} from "@/api/notices/[billID]/NoticeDetail.types";
+} from "@/api/notices/detail/NoticeDetail.types";
 import {
   getBillOpinionStatsFallback,
   getNoticeDetailFallback,

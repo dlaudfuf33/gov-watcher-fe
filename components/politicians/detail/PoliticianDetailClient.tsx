@@ -1,18 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-  ArrowLeft,
-  Mail,
-  Phone,
-  Twitter,
-  Facebook,
-  Youtube,
-  Globe,
-  FileText,
-  BarChart2,
-  Calendar,
-} from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -22,19 +11,15 @@ import PoliticianPoliticalHistory from "@/components/politicians/detail/Politici
 import PoliticianContactInfo from "@/components/politicians/detail/PoliticianContactInfo";
 import PoliticianSocialMedia from "@/components/politicians/detail/PoliticianSocialMedia";
 import PoliticianCareerHistory from "@/components/politicians/detail/PoliticianCareerHistory";
-import PoliticianBillActivities from "@/components/politicians/detail/PoliticianBillActivities";
-import PoliticianBillAnalysis from "@/components/politicians/detail/PoliticianBillAnalysis";
-import PoliticianTopicDistribution from "@/components/politicians/detail/PoliticianTopicDistribution";
-import PoliticianJointNetwork from "@/components/politicians/detail/PoliticianJointNetwork";
-import PoliticianActivityTrend from "@/components/politicians/detail/PoliticianActivityTrend";
-import PoliticianPublicOpinions from "@/components/politicians/detail/PoliticianPublicOpinions";
-import PoliticianRelatedNews from "@/components/politicians/detail/PoliticianRelatedNews";
 import { PoliticianDetail } from "@/types/politiciansType";
 import { useRouter } from "next/navigation";
 import SocialMediaIcons from "./SocialGroup";
 import BillActivityCard from "./BillActivityCard";
 import PoliticalCareerCard from "./PoliticalCareerCard";
 import RecentActivityCard from "./RecentActivityCard";
+import { PoliticianNetworkData } from "@/types/PoliticianJointNetwork.types";
+import PoliticianJointNetwork from "./PoliticianJointNetwork";
+import { getgetPoliticianNetworkData } from "@/api/politicians/detail/PoliticianDetailAPI";
 
 interface PoliticianDetailClientProps {
   politicianDetail: PoliticianDetail;
@@ -46,6 +31,10 @@ export default function PoliticianDetailClient({
   const router = useRouter();
   // 클라이언트 상태 관리
   const [activeTab, setActiveTab] = useState("basic");
+  const [networkData, setNetworkData] = useState<PoliticianNetworkData | null>(
+    null
+  );
+  const [loadingNetwork, setLoadingNetwork] = useState(false);
 
   // 정당에 따른 배지 색상 설정
   const partyColorMap: Record<string, string> = {
@@ -61,10 +50,28 @@ export default function PoliticianDetailClient({
     partyColorMap[politicianDetail.profile.party] ||
     "bg-party-gray-bg text-party-gray-text";
 
+  const loadNetworkData = async () => {
+    if (loadingNetwork) return; // 이미 로딩 중이면 무시
+    setLoadingNetwork(true);
+    try {
+      const res = await getgetPoliticianNetworkData(
+        politicianDetail.profile.id
+      );
+      setNetworkData(res.data);
+    } catch (error) {
+      console.error("Failed to load network data:", error);
+    } finally {
+      setLoadingNetwork(false);
+    }
+  };
+
   // 클라이언트 측 이벤트 핸들러
-  const handleTabChange = (value: string) => {
+  const handleTabChange = async (value: string) => {
     setActiveTab(value);
-    // 탭 변경 시 추가 로직 구현 가능 (예: 분석 데이터 로드, 스크롤 위치 조정 등)
+
+    if (value === "network" && !networkData) {
+      await loadNetworkData();
+    }
   };
 
   return (
@@ -154,7 +161,12 @@ export default function PoliticianDetailClient({
           >
             정치 이력
           </TabsTrigger>
-          <TabsTrigger value="bills" className="data-[state=active]:bg-white">
+          <TabsTrigger value="network" className="data-[state=active]:bg-white">
+            네트워크
+          </TabsTrigger>
+
+          {/* 일단 여기 까지..  */}
+          {/* <TabsTrigger value="bills" className="data-[state=active]:bg-white">
             법안 활동
           </TabsTrigger>
           <TabsTrigger
@@ -163,12 +175,9 @@ export default function PoliticianDetailClient({
           >
             데이터 분석
           </TabsTrigger>
-          <TabsTrigger value="network" className="data-[state=active]:bg-white">
-            네트워크
-          </TabsTrigger>
           <TabsTrigger value="news" className="data-[state=active]:bg-white">
             관련 뉴스
-          </TabsTrigger>
+          </TabsTrigger> */}
         </TabsList>
 
         {/* 기본 정보 탭 */}
@@ -181,40 +190,48 @@ export default function PoliticianDetailClient({
           </div>
         </TabsContent>
 
-        {/* 일단 여기 까지..  */}
         {/* 정치 이력 탭 */}
         <TabsContent value="political">
           <PoliticianPoliticalHistory politicianDetail={politicianDetail} />
         </TabsContent>
 
+        {/* 네트워크 탭 */}
+        <TabsContent value="network">
+          {loadingNetwork ? (
+            <div className="text-center text-gray-500">
+              네트워크 불러오는 중...
+            </div>
+          ) : networkData ? (
+            <PoliticianJointNetwork politicianNetworkData={networkData} />
+          ) : (
+            <div className="text-center text-gray-400">네트워크 정보 없음</div>
+          )}
+        </TabsContent>
+        {/* 일단 여기 까지..  */}
+
         {/* 법안 활동 탭 */}
-        <TabsContent value="bills">
+        {/* <TabsContent value="bills">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <PoliticianBillActivities />
             <PoliticianBillAnalysis />
             <PoliticianTopicDistribution />
             <PoliticianPublicOpinions />
           </div>
-        </TabsContent>
+        </TabsContent> */}
 
         {/* 데이터 분석 탭 */}
-        <TabsContent value="analysis">
+        {/* <TabsContent value="analysis">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <PoliticianBillAnalysis />
             <PoliticianTopicDistribution />
             <PoliticianActivityTrend />
           </div>
-        </TabsContent>
-
-        {/* 네트워크 탭 */}
-        <TabsContent value="network">
-          <PoliticianJointNetwork />
-        </TabsContent>
+        </TabsContent> */}
 
         {/* 관련 뉴스 탭 */}
-        <TabsContent value="news">
+        {/* <TabsContent value="news">
           <PoliticianRelatedNews />
-        </TabsContent>
+        </TabsContent> */}
       </Tabs>
     </main>
   );
