@@ -1,30 +1,31 @@
+import { LegislationDetail } from "@/api/legislation";
 import {
   BillOpinionStatsResponse,
   NoticeDetailResponse,
 } from "./NoticeDetail.types";
 
-export function getNoticeDetailFallback(): NoticeDetailResponse {
+export function getNoticeDetailFallback(): LegislationDetail {
   return {
     data: {
+      id: 1,
       billNo: "000000",
-      viewCount: 0,
-      commentsCount: 0,
+      views: 0,
+      comments: 0,
       title: "데이터를 불러오지 못했습니다.",
-      startDate: new Date(),
-      endDate: new Date(),
-      proposerImageUrl: "/placeholder.png",
+      daysLeft: 3,
+      mainProposerImageUrl: "/placeholder.png",
       mainProposer: "시스템",
-      proposerParty: "무소속",
+      mainProposerParty: "무소속",
       proposers: [],
       proposerDate: new Date(),
       committee: "알 수 없음",
-      currentStep: "불러오기 실패",
-      stepLog: [],
       summary: "데이터를 불러오지 못했습니다.",
-      agreeRatio: 0,
-      opposeRatio: 0,
+      agreeRatio: 1,
+      opposeRatio: 1,
       detailUrl: "#",
       commentsUrl: "#",
+      category: "",
+      department: "",
     },
   };
 }

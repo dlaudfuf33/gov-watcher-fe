@@ -1,4 +1,11 @@
+export interface PartyDistribution {
+  currentSession: number;
+  partyData: Bution[];
+}
 export interface Bution {
-  label: string;
-  value: number;
+  party: string;
+  localCount: number;
+  proportionalCount: number;
+  total: number;
+  ratio: number;
 }

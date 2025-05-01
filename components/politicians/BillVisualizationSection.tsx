@@ -22,7 +22,7 @@ export default async function BillVisualizationSection() {
               <CardTitle>법안 카테고리별 분포</CardTitle>
             </CardHeader>
             <CardContent>
-              <LegislationChart stats={categoryStatsResponse.data} />
+              <LegislationChart props={categoryStatsResponse.data} />
             </CardContent>
           </Card>
         </TabsContent>

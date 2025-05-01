@@ -1,5 +1,4 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FileText } from "lucide-react";
 
 export default function PoliticianBillActivities() {
   // 더미 데이터 - 실제로는 API에서 가져올 수 있음

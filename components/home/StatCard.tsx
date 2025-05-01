@@ -5,14 +5,14 @@ interface StatCardProps {
   title: string;
   value: number;
   changePeriod: number;
-  changeGov: number;
+  changeRecent: number;
 }
 
 export default function StatCard({
   title,
   value,
   changePeriod,
-  changeGov,
+  changeRecent,
 }: StatCardProps) {
   // 증가/감소 여부에 따라 아이콘 반환
   const getTrendIcon = (change: number) => {
@@ -50,7 +50,7 @@ export default function StatCard({
 
         {/* 우측 변화율 영역 */}
         <div className="flex flex-col gap-2 items-end self-end mt-auto">
-          {/* 전월 대비 변화율 */}
+          {/* 전 정부 대비 변화율 */}
           <div className="flex items-center">
             {getTrendIcon(changePeriod)}
             <span
@@ -60,21 +60,23 @@ export default function StatCard({
             >
               {changePeriod}%
             </span>
-            <span className="text-sm text-gray-500 ml-2">1달 전 대비</span>
-          </div>
-
-          {/* 전 정부 대비 변화율 */}
-          <div className="flex items-center">
-            {getTrendIcon(changeGov)}
-            <span
-              className={`text-base font-semibold ml-1 ${getTrendClass(
-                changeGov
-              )}`}
-            >
-              {changeGov}%
-            </span>
             <span className="text-sm text-gray-500 ml-2">전 국회 대비</span>
           </div>
+
+          {/* 최근 대비 변화율 */}
+          {changeRecent !== null && changeRecent !== 0 && (
+            <div className="flex items-center">
+              {getTrendIcon(changeRecent)}
+              <span
+                className={`text-base font-semibold ml-1 ${getTrendClass(
+                  changeRecent
+                )}`}
+              >
+                {changeRecent}%
+              </span>
+              <span className="text-sm text-gray-500 ml-2">1주 전 대비</span>
+            </div>
+          )}
         </div>
       </div>
     </div>

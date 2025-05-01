@@ -10,7 +10,7 @@ import {
   getPoliticianByIdFallback,
 } from "./PoliticiansFallback";
 
-export async function getAllPoliticians(
+export async function getPoliticiansList(
   params: GetAllPoliticiansParams = {}
 ): Promise<PoliticianResponse> {
   try {
@@ -26,7 +26,9 @@ export async function getPoliticianById(
   params: GetPoliticianByIdParams = {}
 ): Promise<PoliticianDetailResponse> {
   try {
-    const res = await instance.get(`/politicians/detail/${params}`);
+    const res = await instance.get(
+      `/politicians/detail/${params.politicianID}`
+    );
     return res.data;
   } catch (err: any) {
     // console.error("❌ Failed to fetch politicians:", err.message || err);

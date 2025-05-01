@@ -1,8 +1,8 @@
-// lib/axios.ts
+// api/axios.ts
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8080/api",
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8080/v1",
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",

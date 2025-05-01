@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { getPoliticianById } from "@/api/politicians/PoliticiansAPI";
 interface PoliticianDetailPageProps {
   params: {
-    id: number;
+    politicianID: number;
   };
 }
 

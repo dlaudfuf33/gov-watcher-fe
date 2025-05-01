@@ -1,6 +1,6 @@
 import type { ParliamentStat } from "@/types/parliamentStats.types";
 import type { CategoryStat } from "@/types/CategoryStat.types";
-import { Bution } from "@/types/Bution.types";
+import { Bution, PartyDistribution } from "@/types/Bution.types";
 import { DemographicStat } from "@/types/DemographicStat.types";
 
 export interface ParliamentStatsResponse {
@@ -11,11 +11,11 @@ export interface ParliamentStatsResponse {
 }
 
 export interface PartyDistributionResponse {
-  data: Bution[];
+  data: PartyDistribution;
 }
 
 export interface CategoryStatsResponse {
-  data: CategoryStat[];
+  data: CategoryStat;
 }
 
 export interface DemographicStatsResponse {

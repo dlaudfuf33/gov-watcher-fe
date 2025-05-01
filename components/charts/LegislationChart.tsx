@@ -9,10 +9,11 @@ import { CategoryStat } from "@/types/CategoryStat.types";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 interface LegislationChartProps {
-  stats: CategoryStat[];
+  props: CategoryStat;
 }
 
-export default function LegislationChart({ stats }: LegislationChartProps) {
+export default function LegislationChart({ props }: LegislationChartProps) {
+  const stats = props.categories;
   const chartData: ChartData<"doughnut"> = {
     labels: stats.map((item) => item.label),
     datasets: [

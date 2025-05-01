@@ -4,7 +4,9 @@ export interface ParliamentStat {
   title: string;
   value: number;
   changePeriod: number;
-  changeGov: number;
+  changeRecent: number;
+  changePeriodRatio: number;
+  changeRecentRatio: number;
 }
 
 export interface ParliamentStatsSectionProps {

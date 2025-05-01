@@ -5,7 +5,7 @@ import SortingOptions from "@/components/politicians/SortingOptions";
 import PoliticiansCardGrid from "./PoliticiansCardGrid";
 import { useEffect, useState, useRef } from "react";
 import { Politician } from "@/types/politiciansType";
-import { getAllPoliticians } from "@/api/politicians/PoliticiansAPI";
+import { getPoliticiansList } from "@/api/politicians/PoliticiansAPI";
 import SearchAndFilterSection from "./SearchAndFilterSection";
 import PoliticianCardSkeletonList from "./PoliticianCardSkeleton";
 
@@ -65,7 +65,7 @@ export default function PoliticianHome() {
     const fetchData = async () => {
       setLoading(true);
       console.log("📦 Fetching page:", page);
-      const res = await getAllPoliticians({ page, limit: 20 });
+      const res = await getPoliticiansList({ page, limit: 20 });
 
       // 중복 제거 (id 기준)
       setPoliticians((prev) => {

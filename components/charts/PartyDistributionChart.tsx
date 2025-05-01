@@ -29,9 +29,10 @@ interface PartyDistributionChartProps {
 export default function PartyDistributionChart({
   butions,
 }: PartyDistributionChartProps) {
-  // labels와 data를 butions 배열에서 추출
-  const labels = butions.map((b) => b.label);
-  const data = butions.map((b) => b.value);
+  const sortedButions = [...butions].sort((a, b) => b.total - a.total);
+
+  const labels = sortedButions.map((b) => b.party);
+  const data = sortedButions.map((b) => b.total);
 
   const chartData = {
     labels,

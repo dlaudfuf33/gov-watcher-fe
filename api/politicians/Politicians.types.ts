@@ -13,7 +13,7 @@ export interface PoliticianResponse {
 }
 
 export interface GetPoliticianByIdParams {
-  id?: number;
+  politicianID?: number;
 }
 
 export interface PoliticianDetailResponse {

@@ -27,7 +27,7 @@ export default async function PoliticianVisualizationSection() {
             </CardHeader>
             <CardContent>
               <PartyDistributionChart
-                butions={partyDistributionResponse.data}
+                butions={partyDistributionResponse.data.partyData}
               />
             </CardContent>
           </Card>

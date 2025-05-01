@@ -8,7 +8,7 @@ import SidebarFilter from "@/components/notice/SidebarFilter";
 import { cn } from "@/lib/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import {
   Sliders,
   ChevronsLeft,
@@ -16,6 +16,8 @@ import {
   LayoutList,
   Smartphone,
 } from "lucide-react";
+import { Pagination } from "@/api/notices/NoticeList.types";
+import { getNoticeList } from "@/api/notices/NoticeListAPI";
 
 function applyFiltersAndSort(
   notices: NoticeProps[],
@@ -70,14 +72,83 @@ function applyFiltersAndSort(
   return result;
 }
 
-export default function NoticesList({ notices }: { notices: NoticeProps[] }) {
+export default function NoticesList({
+  initialNotices,
+  initialPagination,
+}: {
+  initialNotices: NoticeProps[];
+  initialPagination: Pagination;
+}) {
+  const [notices, setNotices] = useState<NoticeProps[]>(initialNotices);
+  const [pagination, setPagination] = useState<Pagination>(initialPagination);
+  const [currentPage, setCurrentPage] = useState(initialPagination.page);
+  const [loading, setLoading] = useState(false);
+  const loaderRef = useRef<HTMLDivElement | null>(null);
   const [isFilterOpen, setIsFilterOpen] = useState(true);
+  const [filters, setFilters] = useState({});
+
+  function mapFiltersToParams(filters: any) {
+    const params: Record<string, any> = {};
+    if (filters.party) params.party = filters.party.join(",");
+    if (filters.category) params.category = filters.category.join(",");
+    if (filters.ratio) params.ratio = filters.ratio.join(",");
+    if (filters.sortOption) params.sortOption = filters.sortOption;
+    return params;
+  }
+
+  const loadMore = useCallback(async () => {
+    if (loading || currentPage >= pagination.totalPages) return;
+    setLoading(true);
+    try {
+      const queryParams = mapFiltersToParams(filters);
+      const res = await getNoticeList(currentPage + 1, 20, queryParams);
+      setNotices((prev) => [...prev, ...(res.data ?? [])]);
+      setPagination(res.pagination);
+      setCurrentPage((prev) => prev + 1);
+    } catch (e) {
+      console.error(e);
+    }
+    setLoading(false);
+  }, [currentPage, loading, pagination.totalPages, filters]);
+
+  useEffect(() => {
+    if (!loaderRef.current) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !loading) {
+          loadMore();
+        }
+      },
+      { rootMargin: "100px" }
+    );
+    observer.observe(loaderRef.current);
+    return () => {
+      if (loaderRef.current) observer.unobserve(loaderRef.current);
+    };
+  }, [loadMore, loading]);
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       setIsFilterOpen(window.innerWidth > 768);
     }
   }, []);
-  const [filters, setFilters] = useState({});
+
+  useEffect(() => {
+    async function fetchFiltered() {
+      setLoading(true);
+      try {
+        const queryParams = mapFiltersToParams(filters);
+        const res = await getNoticeList(1, 20, queryParams);
+        setNotices(res.data ?? []);
+        setPagination(res.pagination);
+        setCurrentPage(1);
+      } catch (e) {
+        console.error(e);
+      }
+      setLoading(false);
+    }
+    fetchFiltered();
+  }, [filters]);
 
   const filteredNotices = applyFiltersAndSort(notices, filters);
 
@@ -150,11 +221,27 @@ export default function NoticesList({ notices }: { notices: NoticeProps[] }) {
                 <TabsContent value="shorts" className="mt-0">
                   <div className="flex justify-center py-4">
                     <div className="w-full max-w-6xl px-4 space-y-8">
-                      {filteredNotices.map((notice, index) => (
+                      {notices.map((notice, index) => (
                         <div key={index} className="snap-start">
                           <NoticeShortCard notice={notice} />
                         </div>
                       ))}
+                      <div
+                        ref={loaderRef}
+                        className="h-20 flex justify-center items-center"
+                      >
+                        {loading ? (
+                          <div className="w-full max-w-2xl space-y-4">
+                            <div className="h-20 bg-gray-200 animate-pulse rounded-md" />
+                            <div className="h-20 bg-gray-200 animate-pulse rounded-md" />
+                            <div className="h-20 bg-gray-200 animate-pulse rounded-md" />
+                          </div>
+                        ) : currentPage >= pagination.totalPages ? (
+                          <span className="text-gray-400 text-sm">
+                            마지막입니다!
+                          </span>
+                        ) : null}
+                      </div>
                     </div>
                   </div>
                 </TabsContent>
@@ -163,11 +250,27 @@ export default function NoticesList({ notices }: { notices: NoticeProps[] }) {
                 <TabsContent value="feed" className="mt-0">
                   <div className="py-8">
                     <div className="container mx-auto px-4 max-w-2xl">
-                      {filteredNotices.map((notice, index) => (
+                      {notices.map((notice, index) => (
                         <div key={index} className="mb-6">
                           <NoticeFeedCard notice={notice} />
                         </div>
                       ))}
+                      <div
+                        ref={loaderRef}
+                        className="h-20 flex justify-center items-center"
+                      >
+                        {loading ? (
+                          <div className="w-full max-w-2xl space-y-4">
+                            <div className="h-20 bg-gray-200 animate-pulse rounded-md" />
+                            <div className="h-20 bg-gray-200 animate-pulse rounded-md" />
+                            <div className="h-20 bg-gray-200 animate-pulse rounded-md" />
+                          </div>
+                        ) : currentPage >= pagination.totalPages ? (
+                          <span className="text-gray-400 text-sm">
+                            마지막입니다!
+                          </span>
+                        ) : null}
+                      </div>
                     </div>
                   </div>
                 </TabsContent>
@@ -177,9 +280,25 @@ export default function NoticesList({ notices }: { notices: NoticeProps[] }) {
                   <div className="py-8 mx-auto">
                     <div className="container mx-auto flex justify-center">
                       <div className="w-full max-w-7xl px-2 space-y-2">
-                        {filteredNotices.map((notice, index) => (
+                        {notices.map((notice, index) => (
                           <NoticeListCard key={index} notice={notice} />
                         ))}
+                        <div
+                          ref={loaderRef}
+                          className="h-20 flex justify-center items-center"
+                        >
+                          {loading ? (
+                            <div className="w-full max-w-2xl space-y-4">
+                              <div className="h-20 bg-gray-200 animate-pulse rounded-md" />
+                              <div className="h-20 bg-gray-200 animate-pulse rounded-md" />
+                              <div className="h-20 bg-gray-200 animate-pulse rounded-md" />
+                            </div>
+                          ) : currentPage >= pagination.totalPages ? (
+                            <span className="text-gray-400 text-sm">
+                              마지막입니다!
+                            </span>
+                          ) : null}
+                        </div>
                       </div>
                     </div>
                   </div>

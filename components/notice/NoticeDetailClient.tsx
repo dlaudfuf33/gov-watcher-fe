@@ -21,7 +21,7 @@ import { ArrowLeft, MessageSquare, Share2 } from "lucide-react";
 import BattleChart from "@/components/charts/BattleChart";
 import TrendChart from "@/components/charts/TrendChart";
 import ProposerGrid from "@/components/notice/ProposerGrid";
-import Header from "@/components/Header";
+
 import {
   getBillOpinionStats,
   getNoticeDetail,
@@ -150,7 +150,6 @@ export default function NoticeDetailClient({
 
   return (
     <div className="min-h-screen bg-[url(/mock/Taegeukgi.png)] bg-cover bg-center bg-fixed">
-      <Header />
       {/* 메인 컨텐츠 */}
       <main className="container mx-auto py-3 px-4 bg-white/70">
         {/* 뒤로가기 버튼 */}
