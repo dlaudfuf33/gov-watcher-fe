@@ -10,14 +10,6 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  async rewrites() {
-    return [
-      {
-        source: "/api/:path*",
-        destination: "http://gov-watcher-be:8080/api/:path*",
-      },
-    ];
-  },
 };
 
 export default nextConfig;
