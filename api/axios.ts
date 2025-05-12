@@ -1,19 +1,20 @@
 // api/axios.ts
 import axios from "axios";
 
-// 서버 컴포넌트용 (Next 서버에서 백엔드 API로 직접 호출)
+// 서버 컴포넌트용 ()
 export const serverAxios = axios.create({
   baseURL:
-    process.env.NEXT_PUBLIC_API_BASE_URL || "http://govwhatsup.com:8080/v1",
+    process.env.NEXT_PUBLIC_API_BASE_URL || "http://gov-watcher-be:8080/api",
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-// 클라이언트 컴포넌트용 (브라우저 → Next → 프록시 → 백엔드)
+// 클라이언트 컴포넌트용 ()
 export const clientAxios = axios.create({
-  baseURL: "/api", // next.config.js rewrites로 처리
+  baseURL:
+    process.env.NEXT_PUBLIC_API_BASE_URL || "http://gov-watcher-be:8080/api",
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",

@@ -64,6 +64,7 @@ export const politicianApi = {
       return {
         profile: {
           id: 0,
+          monaCD: "",
           name: "",
           birthDate: "",
           gender: "",

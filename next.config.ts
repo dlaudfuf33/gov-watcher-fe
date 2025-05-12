@@ -10,15 +10,6 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  async rewrites() {
-    return [
-      {
-        source: "/api/:path*",
-        // destination: "http://192.168.123.103:8080/v1/:path*",
-        destination: "https://govwhatsup.com/api/v1/:path*",
-      },
-    ];
-  },
 };
 
 export default nextConfig;
