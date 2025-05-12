@@ -35,7 +35,7 @@ export const politicianApi = {
   }): Promise<PoliticianResponse> => {
     try {
       const axiosInstance = isServer ? serverAxios : clientAxios;
-      const res = await axiosInstance.get("/politicians", {
+      const res = await axiosInstance.get("/v1/politicians", {
         params: { page, size, name, party, district, sort },
       });
       return res.data;
@@ -55,7 +55,7 @@ export const politicianApi = {
     try {
       const axiosInstance = isServer ? serverAxios : clientAxios;
       const res = await axiosInstance.get(
-        `/politicians/detail/${politicianID}`
+        `/v1/politicians/detail/${politicianID}`
       );
       console.log(JSON.stringify(res.data));
       return res.data;
@@ -107,7 +107,7 @@ export const politicianApi = {
     try {
       const axiosInstance = isServer ? serverAxios : clientAxios;
       const res = await axiosInstance.get(
-        `/politicians/network/${politicianID}`
+        `/v1/politicians/network/${politicianID}`
       );
       return res;
     } catch (error) {

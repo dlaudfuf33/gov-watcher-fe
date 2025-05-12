@@ -54,7 +54,7 @@ export const legislationApi = {
   }): Promise<{ data: Legislation[]; total: number }> => {
     try {
       const axiosInstance = isServer ? serverAxios : clientAxios;
-      const response = await axiosInstance.get("/legislations/notices", {
+      const response = await axiosInstance.get("/v1/legislations/notices", {
         params: { page, size, primarySort, secondarySort },
       });
       return {
@@ -70,7 +70,7 @@ export const legislationApi = {
   // 입법예고안 상세 조회
   getLegislationDetail: async (id: number): Promise<LegislationDetail> => {
     try {
-      const response = await serverAxios.get(`/legislations/${id}`);
+      const response = await serverAxios.get(`/v1/legislations/${id}`);
       return response.data;
     } catch (error) {
       console.error(`입법예고안 상세 조회 실패 (ID: ${id}):`, error);

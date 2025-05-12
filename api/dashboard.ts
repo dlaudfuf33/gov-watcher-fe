@@ -26,7 +26,7 @@ export interface DemographicStatsResponse {
 export const dashboardApi = {
   getParliamentStats: async (): Promise<ParliamentStatsResponse> => {
     try {
-      const res = await serverAxios.get("/dashboard/parliament-stats");
+      const res = await serverAxios.get("/v1/dashboard/parliament-stats");
       return res.data;
     } catch {
       return {
@@ -40,7 +40,7 @@ export const dashboardApi = {
 
   getPartyDistribution: async (): Promise<PartyDistributionResponse> => {
     try {
-      const res = await serverAxios.get("/dashboard/party-distribution");
+      const res = await serverAxios.get("/v1/dashboard/party-distribution");
       return res.data;
     } catch {
       return {
@@ -51,7 +51,7 @@ export const dashboardApi = {
 
   getCommitteeStats: async (): Promise<CommitteeStatsResponse> => {
     try {
-      const res = await serverAxios.get("/dashboard/committee-stats");
+      const res = await serverAxios.get("/v1/dashboard/committee-stats");
       return res.data;
     } catch {
       return {
@@ -62,7 +62,7 @@ export const dashboardApi = {
 
   getPartyBillStats: async (): Promise<CommitteeStatsResponse> => {
     try {
-      const res = await serverAxios.get("/dashboard/partybill-stats");
+      const res = await serverAxios.get("/v1/dashboard/partybill-stats");
       return res.data;
     } catch {
       return {
@@ -73,7 +73,7 @@ export const dashboardApi = {
 
   getDemographicStats: async (): Promise<DemographicStatsResponse> => {
     try {
-      const res = await serverAxios.get("/dashboard/demographic-stats");
+      const res = await serverAxios.get("/v1/dashboard/demographic-stats");
       return res.data;
     } catch {
       return {
