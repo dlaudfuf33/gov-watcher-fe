@@ -29,7 +29,8 @@ jobs:
       - name: Build and Push Docker image
         run: |
           docker buildx build --push \
-            --platform linux/amd64,linux/arm64 \
-            --tag dlaudfuf33/gov-watcher-fe:${{ github.event.release.tag_name }} \
-            --tag dlaudfuf33/gov-watcher-fe:latest \
-            .
+          --platform linux/amd64,linux/arm64 \
+          --build-arg NEXT_PUBLIC_API_BASE_URL=${{ secrets.NEXT_PUBLIC_API_BASE_URL }} \
+          --tag dlaudfuf33/gov-watcher-fe:${{ github.event.release.tag_name }} \
+          --tag dlaudfuf33/gov-watcher-fe:latest \
+          .

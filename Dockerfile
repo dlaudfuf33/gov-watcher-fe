@@ -3,6 +3,10 @@ FROM node:22-alpine AS builder
 
 WORKDIR /app
 
+# 환경변수 인자로 받을 준비
+ARG NEXT_PUBLIC_API_BASE_URL
+ENV NEXT_PUBLIC_API_BASE_URL=$NEXT_PUBLIC_API_BASE_URL
+
 # 패키지 설치
 COPY package.json pnpm-lock.yaml ./
 RUN npm install -g pnpm && pnpm install
