@@ -1,0 +1,33 @@
+# .github/workflows/deploy.yml
+
+name: Deploy to Raspberry Pi
+
+on:
+  workflow_run:
+    workflows: ["Docker Build and Push to Docker Hub"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.RASPI_SSH_KEY }}
+
+      - name: Deploy via SSH
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.RASPI_USER }}@${{ secrets.RASPI_HOST }} << 'EOF'
+            echo "✅ Raspi 접속 완료"
+
+            cd ~/gov-watcher-fe
+            git pull origin main
+            docker compose pull
+            docker compose up -d
+
+            echo "🚀 FE 최신화 완료"
+          EOF

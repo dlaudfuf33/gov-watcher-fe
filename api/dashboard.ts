@@ -1,0 +1,84 @@
+import { serverAxios } from "@/api/axios";
+import { DemographicStat } from "@/types/DemographicStat.types";
+import { CategoryStat } from "@/types/CategoryStat.types";
+import { PartyDistribution } from "@/types/Bution.types";
+import { ParliamentStat } from "@/types/parliamentStats.types";
+
+export interface ParliamentStatsResponse {
+  data: {
+    currentSession: number;
+    parliamentStat: ParliamentStat[];
+  };
+}
+
+export interface PartyDistributionResponse {
+  data: PartyDistribution;
+}
+
+export interface CommitteeStatsResponse {
+  data: CategoryStat;
+}
+
+export interface DemographicStatsResponse {
+  data: DemographicStat;
+}
+
+export const dashboardApi = {
+  getParliamentStats: async (): Promise<ParliamentStatsResponse> => {
+    try {
+      const res = await serverAxios.get("/dashboard/parliament-stats");
+      return res.data;
+    } catch {
+      return {
+        data: {
+          currentSession: 0,
+          parliamentStat: [],
+        },
+      };
+    }
+  },
+
+  getPartyDistribution: async (): Promise<PartyDistributionResponse> => {
+    try {
+      const res = await serverAxios.get("/dashboard/party-distribution");
+      return res.data;
+    } catch {
+      return {
+        data: { currentSession: 0, partyData: [] },
+      };
+    }
+  },
+
+  getCommitteeStats: async (): Promise<CommitteeStatsResponse> => {
+    try {
+      const res = await serverAxios.get("/dashboard/committee-stats");
+      return res.data;
+    } catch {
+      return {
+        data: { total: 0, categories: [] },
+      };
+    }
+  },
+
+  getPartyBillStats: async (): Promise<CommitteeStatsResponse> => {
+    try {
+      const res = await serverAxios.get("/dashboard/partybill-stats");
+      return res.data;
+    } catch {
+      return {
+        data: { total: 0, categories: [] },
+      };
+    }
+  },
+
+  getDemographicStats: async (): Promise<DemographicStatsResponse> => {
+    try {
+      const res = await serverAxios.get("/dashboard/demographic-stats");
+      return res.data;
+    } catch {
+      return {
+        data: { labels: [], male: [], female: [] },
+      };
+    }
+  },
+};
