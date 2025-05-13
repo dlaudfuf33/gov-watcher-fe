@@ -32,6 +32,5 @@ jobs:
           docker buildx build --push \
           --platform linux/amd64,linux/arm64 \
           --build-arg NEXT_PUBLIC_API_BASE_URL=https://govwhatsup.com/api \
-          --tag dlaudfuf33/gov-watcher-fe:${{ github.event.release.tag_name }} \
           --tag dlaudfuf33/gov-watcher-fe:latest \
           .
