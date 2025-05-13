@@ -2,7 +2,7 @@
 import axios from "axios";
 
 export const homeAxios = axios.create({
-  baseURL: "http://gov-wather-be:8080/api",
+  baseURL: "http://gov-watcher-be:8080/api",
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",
