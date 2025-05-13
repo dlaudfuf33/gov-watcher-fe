@@ -28,7 +28,8 @@ export const dashboardApi = {
     try {
       const res = await serverAxios.get("/v1/dashboard/parliament-stats");
       return res.data;
-    } catch {
+    } catch (error) {
+      console.error("parliament-stats 조회 실패:", error);
       return {
         data: {
           currentSession: 0,
@@ -42,7 +43,8 @@ export const dashboardApi = {
     try {
       const res = await serverAxios.get("/v1/dashboard/party-distribution");
       return res.data;
-    } catch {
+    } catch (error) {
+      console.error("parliament-stats 조회 실패:", error);
       return {
         data: { currentSession: 0, partyData: [] },
       };
@@ -53,7 +55,8 @@ export const dashboardApi = {
     try {
       const res = await serverAxios.get("/v1/dashboard/committee-stats");
       return res.data;
-    } catch {
+    } catch (error) {
+      console.error("committee-stats 조회 실패:", error);
       return {
         data: { total: 0, categories: [] },
       };
@@ -64,7 +67,8 @@ export const dashboardApi = {
     try {
       const res = await serverAxios.get("/v1/dashboard/partybill-stats");
       return res.data;
-    } catch {
+    } catch (error) {
+      console.error("partybill-stats 조회 실패:", error);
       return {
         data: { total: 0, categories: [] },
       };
@@ -75,7 +79,8 @@ export const dashboardApi = {
     try {
       const res = await serverAxios.get("/v1/dashboard/demographic-stats");
       return res.data;
-    } catch {
+    } catch (error) {
+      console.error("demographic-stats 조회 실패:", error);
       return {
         data: { labels: [], male: [], female: [] },
       };
