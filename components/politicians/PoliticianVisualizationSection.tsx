@@ -8,12 +8,6 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default async function PoliticianVisualizationSection() {
-  const [partyDistributionResponse, demographicStatsResponse] =
-    await Promise.all([
-      dashboardApi.getPartyDistribution(),
-      dashboardApi.getDemographicStats(),
-    ]);
-
   return (
     <section className="mb-12 ">
       <Tabs defaultValue="party">
@@ -39,9 +33,7 @@ export default async function PoliticianVisualizationSection() {
               <CardTitle>정당별 의원 수 비율</CardTitle>
             </CardHeader>
             <CardContent>
-              <PartyDistributionChart
-                butions={partyDistributionResponse.data.partyData}
-              />
+              <PartyDistributionChart />
             </CardContent>
           </Card>
         </TabsContent>
@@ -52,7 +44,7 @@ export default async function PoliticianVisualizationSection() {
               <CardTitle>국회의원 성별 / 연령대 분포</CardTitle>
             </CardHeader>
             <CardContent>
-              <GenderAgeChart stats={demographicStatsResponse.data} />
+              <GenderAgeChart />
             </CardContent>
           </Card>
         </TabsContent>

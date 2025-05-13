@@ -1,15 +1,12 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Bution } from "@/types/Bution.types";
+import { dashboardApi } from "@/api/dashboard";
 
-// Chart.js 등록
 ChartJS.register(ArcElement, Tooltip, Legend);
-
-interface PartyDistributionChartProps {
-  butions: Bution[];
-}
 
 const centerTextPlugin = {
   id: "centerText",
@@ -32,11 +29,16 @@ const centerTextPlugin = {
   },
 };
 
-export default function PartyDistributionChart({
-  butions,
-}: PartyDistributionChartProps) {
-  const sortedButions = [...butions].sort((a, b) => b.total - a.total);
+export default function PartyDistributionChart() {
+  const [butions, setButions] = useState<Bution[]>([]);
 
+  useEffect(() => {
+    dashboardApi.getPartyDistribution().then((res) => {
+      setButions(res.data.partyData);
+    });
+  }, []);
+
+  const sortedButions = [...butions].sort((a, b) => b.total - a.total);
   const labels = sortedButions.map((b) => b.party);
   const data = sortedButions.map((b) => b.total);
 
@@ -55,7 +57,7 @@ export default function PartyDistributionChart({
           "#65666e",
           "#03d2c3",
           "#f68400",
-        ].slice(0, data.length), // 데이터 개수에 맞춰 색상 잘라줌
+        ].slice(0, data.length),
         borderWidth: 0,
       },
     ],

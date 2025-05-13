@@ -1,14 +1,6 @@
 // api/axios.ts
 import axios from "axios";
 
-export const homeAxios = axios.create({
-  baseURL: "http://gov-watcher-be:8080/api",
-  timeout: 10000,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-
 // 서버 컴포넌트용 (Next 서버에서 백엔드 API로 직접 호출)
 export const serverAxios = axios.create({
   baseURL: "https://govwhatsup.com/api",

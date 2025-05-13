@@ -11,6 +11,8 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import type { DemographicStat } from "@/types/DemographicStat.types";
+import { useEffect, useState } from "react";
+import { dashboardApi } from "@/api/dashboard";
 
 ChartJS.register(
   CategoryScale,
@@ -21,11 +23,17 @@ ChartJS.register(
   Legend
 );
 
-interface GenderAgeChartProps {
-  stats: DemographicStat;
-}
+export default function GenderAgeChart() {
+  const [stats, setStats] = useState<DemographicStat | null>(null);
 
-export default function GenderAgeChart({ stats }: GenderAgeChartProps) {
+  useEffect(() => {
+    dashboardApi.getDemographicStats().then((res) => {
+      setStats(res.data);
+    });
+  }, []);
+
+  if (!stats) return <div className="p-4 text-center">로딩 중...</div>;
+
   const chartData = {
     labels: stats.labels,
     datasets: [

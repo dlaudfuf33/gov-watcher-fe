@@ -1,6 +1,5 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { dashboardApi } from "@/api/dashboard";
 import HomeMotionWrapper from "@/components/HomeMotionWrapper";
 import HeroSection from "@/components/home/HeroSection";
 import ParliamentStatsSection from "@/components/home/ParliamentStatsSection";
@@ -9,10 +8,6 @@ import BillVisualizationSection from "@/components/politicians/BillVisualization
 import CtaSection from "@/components/home/CtaSection";
 
 export default async function Page() {
-  const [parliamentStatsResponse] = await Promise.all([
-    dashboardApi.getParliamentStats(),
-  ]);
-
   return (
     <>
       <section className="min-h-screen flex flex-col bg-[url(/mock/koreaguide.jpg)] bg-cover bg-center bg-no-repeat bg-fixed">
@@ -24,10 +19,7 @@ export default async function Page() {
             <HeroSection />
             <section className="bg-white">
               <section className="bg-[#f5f5f5]">
-                <ParliamentStatsSection
-                  currentSession={parliamentStatsResponse.data.currentSession}
-                  stats={parliamentStatsResponse.data.parliamentStat}
-                />
+                <ParliamentStatsSection />
 
                 <section className="py-4 sm:py-6 lg:py-8 bg-[#f5f5f5]">
                   <div className="container mx-auto px-4">

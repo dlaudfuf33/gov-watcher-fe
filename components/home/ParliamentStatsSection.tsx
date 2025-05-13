@@ -1,12 +1,26 @@
 "use client";
 import { motion } from "framer-motion";
 import StatCard from "@/components/home/StatCard";
-import type { ParliamentStatsSectionProps } from "@/types/parliamentStats.types";
+import { useEffect, useState } from "react";
+import { dashboardApi } from "@/api/dashboard";
 
-export default function ParliamentStatsSection({
-  currentSession,
-  stats,
-}: ParliamentStatsSectionProps) {
+export default function ParliamentStatsSection() {
+  const [currentSession, setCurrentSession] = useState<number | null>(null);
+  const [stats, setStats] = useState<any[]>([]);
+
+  useEffect(() => {
+    async function fetchStats() {
+      try {
+        const res = await dashboardApi.getParliamentStats();
+        setCurrentSession(res.data.currentSession);
+        setStats(res.data.parliamentStat);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchStats();
+  }, []);
+
   return (
     <>
       <div className="py-8 bg-[#f5f5f5] backdrop-blur-sm shadow-inner ring-1 ring-inset ring-gray-300/30">

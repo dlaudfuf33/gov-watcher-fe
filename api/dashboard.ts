@@ -1,4 +1,4 @@
-import { homeAxios, serverAxios } from "@/api/axios";
+import { clientAxios, serverAxios } from "@/api/axios";
 import { DemographicStat } from "@/types/DemographicStat.types";
 import { CategoryStat } from "@/types/CategoryStat.types";
 import { PartyDistribution } from "@/types/Bution.types";
@@ -26,7 +26,7 @@ export interface DemographicStatsResponse {
 export const dashboardApi = {
   getParliamentStats: async (): Promise<ParliamentStatsResponse> => {
     try {
-      const res = await homeAxios.get("/v1/dashboard/parliament-stats");
+      const res = await clientAxios.get("/v1/dashboard/parliament-stats");
       return res.data;
     } catch (error) {
       console.error("parliament-stats 조회 실패:", error);
@@ -41,7 +41,7 @@ export const dashboardApi = {
 
   getPartyDistribution: async (): Promise<PartyDistributionResponse> => {
     try {
-      const res = await homeAxios.get("/v1/dashboard/party-distribution");
+      const res = await clientAxios.get("/v1/dashboard/party-distribution");
       return res.data;
     } catch (error) {
       console.error("parliament-stats 조회 실패:", error);
@@ -53,7 +53,7 @@ export const dashboardApi = {
 
   getCommitteeStats: async (): Promise<CommitteeStatsResponse> => {
     try {
-      const res = await homeAxios.get("/v1/dashboard/committee-stats");
+      const res = await clientAxios.get("/v1/dashboard/committee-stats");
       return res.data;
     } catch (error) {
       console.error("committee-stats 조회 실패:", error);
@@ -65,7 +65,7 @@ export const dashboardApi = {
 
   getPartyBillStats: async (): Promise<CommitteeStatsResponse> => {
     try {
-      const res = await homeAxios.get("/v1/dashboard/partybill-stats");
+      const res = await clientAxios.get("/v1/dashboard/partybill-stats");
       return res.data;
     } catch (error) {
       console.error("partybill-stats 조회 실패:", error);
@@ -77,7 +77,7 @@ export const dashboardApi = {
 
   getDemographicStats: async (): Promise<DemographicStatsResponse> => {
     try {
-      const res = await homeAxios.get("/v1/dashboard/demographic-stats");
+      const res = await clientAxios.get("/v1/dashboard/demographic-stats");
       return res.data;
     } catch (error) {
       console.error("demographic-stats 조회 실패:", error);
