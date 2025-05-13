@@ -1,9 +1,10 @@
 name: Docker Build and Push to Docker Hub
 
-# "Release 생성(published)" 이벤트가 발생했을 때만 실행
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - main
+
 
 jobs:
   build-and-push:
